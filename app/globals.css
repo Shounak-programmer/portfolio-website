@@ -1,26 +1,205 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Cyberpunk Color Palette */
+  --cyber-bg: #0a0e27;
+  --cyber-bg-secondary: #0f1429;
+  --cyber-bg-tertiary: #1a1f3a;
+
+  --cyber-primary: #00f0ff;
+  --cyber-secondary: #ff006e;
+  --cyber-accent: #8b5cf6;
+  --cyber-warning: #ffbe0b;
+  --cyber-success: #00ff88;
+
+  --cyber-text: #e0e7ff;
+  --cyber-text-muted: #94a3b8;
+  --cyber-border: #1e293b;
+
+  /* Glow effects */
+  --glow-primary: 0 0 20px rgba(0, 240, 255, 0.5);
+  --glow-secondary: 0 0 20px rgba(255, 0, 110, 0.5);
+  --glow-accent: 0 0 20px rgba(139, 92, 246, 0.5);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-rajdhani);
+  --font-mono: var(--font-share-tech-mono);
+  --font-display: var(--font-orbitron);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cyber-bg);
+  color: var(--cyber-text);
+  font-family: var(--font-rajdhani), sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated background grid */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+/* Scanline effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom,
+      transparent 50%,
+      rgba(0, 240, 255, 0.02) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 1;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+/* Glitch effect */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Neon glow pulse */
+@keyframes neonPulse {
+
+  0%,
+  100% {
+    text-shadow:
+      0 0 10px rgba(0, 240, 255, 0.8),
+      0 0 20px rgba(0, 240, 255, 0.6),
+      0 0 30px rgba(0, 240, 255, 0.4);
+  }
+
+  50% {
+    text-shadow:
+      0 0 20px rgba(0, 240, 255, 1),
+      0 0 30px rgba(0, 240, 255, 0.8),
+      0 0 40px rgba(0, 240, 255, 0.6);
+  }
+}
+
+/* Ticker animation */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cyber-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cyber-primary);
+  border-radius: 5px;
+  box-shadow: var(--glow-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyber-secondary);
+  box-shadow: var(--glow-secondary);
+}
+
+/* Selection */
+::selection {
+  background: var(--cyber-primary);
+  color: var(--cyber-bg);
+}
+
+/* Utility classes */
+.cyber-glow-primary {
+  box-shadow: var(--glow-primary);
+}
+
+.cyber-glow-secondary {
+  box-shadow: var(--glow-secondary);
+}
+
+.cyber-glow-accent {
+  box-shadow: var(--glow-accent);
+}
+
+.text-glow {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+.glitch-effect {
+  animation: glitch 0.3s ease-in-out infinite;
 }

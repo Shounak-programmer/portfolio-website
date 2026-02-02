@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Orbitron, Rajdhani, Share_Tech_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -25,6 +25,15 @@ const shareTechMono = Share_Tech_Mono({
   display: 'swap',
   preload: true,
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0a0e27' },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://shounakchatterjee.tech'),
@@ -62,14 +71,6 @@ export const metadata: Metadata = {
     description: "Full Stack Developer crafting innovative digital experiences",
     creator: "@user_shounak",
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#0a0e27' },
-  ],
 };
 
 export default function RootLayout({

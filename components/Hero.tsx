@@ -6,18 +6,32 @@ import { useEffect, useState } from 'react';
 const Hero = () => {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
+    const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
     const springConfig = { damping: 25, stiffness: 100 };
     const springX = useSpring(mouseX, springConfig);
     const springY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
+        // Set initial window size
+        setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+
         const handleMouseMove = (e: MouseEvent) => {
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
         };
 
+        const handleResize = () => {
+            setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+        };
+
         window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('resize', handleResize);
+        };
     }, [mouseX, mouseY]);
 
     const techStack = [
@@ -33,8 +47,8 @@ const Hero = () => {
                 className="absolute w-96 h-96 rounded-full blur-[100px] opacity-20"
                 style={{
                     background: 'radial-gradient(circle, #00f0ff 0%, transparent 70%)',
-                    x: useTransform(springX, (value: number) => (value - window.innerWidth / 2) * 0.1),
-                    y: useTransform(springY, (value: number) => (value - window.innerHeight / 2) * 0.1),
+                    x: useTransform(springX, (value: number) => (value - windowSize.width / 2) * 0.1),
+                    y: useTransform(springY, (value: number) => (value - windowSize.height / 2) * 0.1),
                 }}
             />
 
@@ -42,8 +56,8 @@ const Hero = () => {
                 className="absolute w-96 h-96 rounded-full blur-[100px] opacity-20"
                 style={{
                     background: 'radial-gradient(circle, #ff006e 0%, transparent 70%)',
-                    x: useTransform(springX, (value: number) => -(value - window.innerWidth / 2) * 0.1),
-                    y: useTransform(springY, (value: number) => -(value - window.innerHeight / 2) * 0.1),
+                    x: useTransform(springX, (value: number) => -(value - windowSize.width / 2) * 0.1),
+                    y: useTransform(springY, (value: number) => -(value - windowSize.height / 2) * 0.1),
                 }}
             />
 

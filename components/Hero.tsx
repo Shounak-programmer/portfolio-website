@@ -1,19 +1,24 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-export default function Hero() {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+const Hero = () => {
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    const springConfig = { damping: 25, stiffness: 100 };
+    const springX = useSpring(mouseX, springConfig);
+    const springY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
         };
 
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    }, [mouseX, mouseY]);
 
     const techStack = [
         'React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'TailwindCSS',
@@ -25,31 +30,21 @@ export default function Hero() {
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
             {/* Animated gradient orbs */}
             <motion.div
-                className="absolute w-96 h-96 rounded-full blur-3xl opacity-20"
+                className="absolute w-96 h-96 rounded-full blur-[100px] opacity-20"
                 style={{
                     background: 'radial-gradient(circle, #00f0ff 0%, transparent 70%)',
-                    left: mousePosition.x - 192,
-                    top: mousePosition.y - 192,
+                    x: useTransform(springX, (value: number) => (value - window.innerWidth / 2) * 0.1),
+                    y: useTransform(springY, (value: number) => (value - window.innerHeight / 2) * 0.1),
                 }}
-                animate={{
-                    x: mousePosition.x * 0.02,
-                    y: mousePosition.y * 0.02,
-                }}
-                transition={{ type: 'spring', damping: 30 }}
             />
 
             <motion.div
-                className="absolute w-96 h-96 rounded-full blur-3xl opacity-20"
+                className="absolute w-96 h-96 rounded-full blur-[100px] opacity-20"
                 style={{
                     background: 'radial-gradient(circle, #ff006e 0%, transparent 70%)',
-                    right: mousePosition.x * 0.5,
-                    bottom: mousePosition.y * 0.5,
+                    x: useTransform(springX, (value: number) => -(value - window.innerWidth / 2) * 0.1),
+                    y: useTransform(springY, (value: number) => -(value - window.innerHeight / 2) * 0.1),
                 }}
-                animate={{
-                    x: -mousePosition.x * 0.02,
-                    y: -mousePosition.y * 0.02,
-                }}
-                transition={{ type: 'spring', damping: 30 }}
             />
 
             <div className="relative z-10 text-center px-4 max-w-7xl mx-auto">
@@ -60,7 +55,7 @@ export default function Hero() {
                     transition={{ duration: 0.8 }}
                     className="mb-6"
                 >
-                    <span className="text-[#00f0ff] font-mono text-sm md:text-base tracking-widest">
+                    <span className="text-[#00f0ff] font-mono text-sm md:text-base tracking-widest px-4 py-1 rounded-full border border-[#00f0ff]/30 bg-[#00f0ff]/5 backdrop-blur-sm">
                         {'<'} DEVELOPER {'/>'}
                     </span>
                 </motion.div>
@@ -74,8 +69,8 @@ export default function Hero() {
                 >
                     <span className="block text-6xl md:text-8xl lg:text-9xl font-black mb-4"
                         style={{ fontFamily: 'Orbitron, sans-serif' }}>
-                        <span className="relative inline-block">
-                            <span className="relative z-10 bg-gradient-to-r from-[#00f0ff] via-[#8b5cf6] to-[#ff006e] bg-clip-text text-transparent">
+                        <span className="relative inline-block hover:scale-105 transition-transform duration-500 cursor-default">
+                            <span className="relative z-10 bg-gradient-to-r from-[#00f0ff] via-[#8b5cf6] to-[#ff006e] bg-clip-text text-transparent filter drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
                                 SHOUNAK
                             </span>
                             {/* Glitch layers */}
@@ -97,8 +92,8 @@ export default function Hero() {
                     </span>
                     <span className="block text-5xl md:text-7xl lg:text-8xl font-black"
                         style={{ fontFamily: 'Orbitron, sans-serif' }}>
-                        <span className="relative inline-block">
-                            <span className="relative z-10 bg-gradient-to-r from-[#ff006e] via-[#8b5cf6] to-[#00f0ff] bg-clip-text text-transparent">
+                        <span className="relative inline-block hover:scale-105 transition-transform duration-500 cursor-default">
+                            <span className="relative z-10 bg-gradient-to-r from-[#ff006e] via-[#8b5cf6] to-[#00f0ff] bg-clip-text text-transparent filter drop-shadow-[0_0_15px_rgba(255,0,110,0.3)]">
                                 CHATTERJEE
                             </span>
                             {/* Glitch layers */}
@@ -125,10 +120,10 @@ export default function Hero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-xl md:text-2xl text-[#94a3b8] mt-6 mb-12 font-light tracking-wide"
+                    className="text-xl md:text-2xl text-[#94a3b8] mt-8 mb-12 font-light tracking-wide max-w-2xl mx-auto"
                     style={{ fontFamily: 'Rajdhani, sans-serif' }}
                 >
-                    Full Stack Developer • Creative Coder • Tech Enthusiast
+                    Full Stack Developer <span className="text-[#ff006e] mx-2">•</span> Creative Coder <span className="text-[#00f0ff] mx-2">•</span> Tech Enthusiast
                 </motion.p>
 
                 {/* CTA Buttons */}
@@ -136,20 +131,19 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
-                    className="flex flex-wrap gap-4 justify-center mb-20"
+                    className="flex flex-wrap gap-6 justify-center mb-24"
                 >
                     <a
                         href="#contact"
-                        className="group relative rounded-full px-8 py-4 bg-transparent border-2 border-[#00f0ff] text-[#00f0ff] font-semibold tracking-wider overflow-hidden transition-all duration-300 hover:text-[#0a0e27]"
+                        className="group relative rounded-full px-8 py-4 bg-[#0a0e27] border border-[#00f0ff]/50 text-[#00f0ff] font-semibold tracking-wider overflow-hidden transition-all duration-300 hover:text-[#0a0e27] hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
                     >
                         <span className="relative z-10">GET IN TOUCH</span>
                         <span className="absolute inset-0 bg-[#00f0ff] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                        <span className="absolute inset-0 shadow-[0_0_20px_rgba(0,240,255,0.5)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     </a>
 
                     <a
                         href="#projects"
-                        className="group relative rounded-full px-8 py-4 bg-[#ff006e] text-white font-semibold tracking-wider overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,110,0.6)]"
+                        className="group relative rounded-full px-8 py-4 bg-[#ff006e] text-white font-bold tracking-wider overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,110,0.6)]"
                     >
                         <span className="relative z-10">VIEW PROJECTS</span>
                         <span className="absolute inset-0 bg-gradient-to-r from-[#ff006e] to-[#8b5cf6] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -161,16 +155,16 @@ export default function Hero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
-                    className="relative overflow-hidden py-6 border-t border-b border-[#1e293b]"
+                    className="glassmorphism rounded-2xl mx-auto max-w-5xl overflow-hidden py-4 border border-[#1e293b]/50"
                 >
                     <div className="flex whitespace-nowrap animate-[ticker_30s_linear_infinite]">
                         {[...techStack, ...techStack].map((tech, index) => (
                             <div
                                 key={index}
-                                className="inline-flex items-center mx-6"
+                                className="inline-flex items-center mx-8"
                             >
-                                <span className="text-[#00f0ff] mr-2">▸</span>
-                                <span className="text-lg font-semibold text-[#e0e7ff] tracking-wider">
+                                <span className="text-[#00f0ff] mr-2 text-xl">⚡</span>
+                                <span className="text-lg font-semibold text-[#e0e7ff] tracking-wider opacity-80 hover:opacity-100 transition-opacity">
                                     {tech}
                                 </span>
                             </div>
@@ -189,7 +183,7 @@ export default function Hero() {
                 <motion.div
                     animate={{ y: [0, 10, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
-                    className="w-6 h-10 border-2 border-[#00f0ff] rounded-full flex justify-center pt-2"
+                    className="w-6 h-10 border-2 border-[#00f0ff]/30 rounded-full flex justify-center pt-2"
                 >
                     <motion.div
                         animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
@@ -200,4 +194,5 @@ export default function Hero() {
             </motion.div>
         </section>
     );
-}
+};
+export default Hero;

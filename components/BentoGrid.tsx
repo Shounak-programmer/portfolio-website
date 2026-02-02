@@ -16,7 +16,7 @@ const BentoCard = ({ title, description, icon, className = '', gradient }: Bento
 
     return (
         <motion.div
-            className={`relative group overflow-hidden rounded-3xl border border-[#1e293b] bg-[#0f1429] p-8 cursor-pointer ${className}`}
+            className={`glassmorphism relative group overflow-hidden rounded-3xl p-8 cursor-pointer transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] ${className}`}
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
             onHoverStart={() => setIsHovered(true)}
@@ -37,22 +37,24 @@ const BentoCard = ({ title, description, icon, className = '', gradient }: Bento
             />
 
             {/* Content */}
-            <div className="relative z-10">
+            <div className="relative z-10 flex flex-col h-full">
                 <motion.div
-                    className="text-6xl mb-4"
+                    className="text-6xl mb-auto"
                     animate={{ rotate: isHovered ? 360 : 0 }}
                     transition={{ duration: 0.6 }}
                 >
                     {icon}
                 </motion.div>
 
-                <h3 className="text-2xl font-bold mb-2 text-[#e0e7ff]" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-                    {title}
-                </h3>
+                <div>
+                    <h3 className="text-2xl font-bold mb-2 text-[#e0e7ff]" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                        {title}
+                    </h3>
 
-                <p className="text-[#94a3b8] leading-relaxed">
-                    {description}
-                </p>
+                    <p className="text-[#94a3b8] leading-relaxed text-sm">
+                        {description}
+                    </p>
+                </div>
             </div>
 
             {/* Corner accent */}
@@ -108,10 +110,10 @@ export default function BentoGrid() {
             gradient: 'linear-gradient(135deg, #ffbe0b, #ffa500)',
         },
         {
-            title: 'Performance Optimization',
+            title: 'Performance',
             description: 'Making applications blazing fast with advanced optimization techniques.',
             icon: '🚀',
-            className: 'md:col-span-2 md:row-span-1',
+            className: 'md:col-span-1 md:row-span-1',
             gradient: 'linear-gradient(135deg, #00f0ff, #ff006e)',
         },
     ];
@@ -137,7 +139,7 @@ export default function BentoGrid() {
                 </motion.div>
 
                 {/* Bento Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[220px]">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
                     {cards.map((card, index) => (
                         <motion.div
                             key={index}
@@ -145,8 +147,9 @@ export default function BentoGrid() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             viewport={{ once: true }}
+                            className={card.className}
                         >
-                            <BentoCard {...card} />
+                            <BentoCard {...card} className="h-full" />
                         </motion.div>
                     ))}
                 </div>

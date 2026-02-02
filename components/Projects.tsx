@@ -93,7 +93,7 @@ export default function Projects() {
                             onHoverEnd={() => setHoveredIndex(null)}
                         >
                             <motion.div
-                                className="relative h-full rounded-3xl border border-[#1e293b] bg-[#0f1429] p-8 overflow-hidden cursor-pointer"
+                                className="glassmorphism relative h-full rounded-3xl p-8 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]"
                                 whileHover={{ y: -8 }}
                                 transition={{ duration: 0.3 }}
                             >
@@ -134,7 +134,7 @@ export default function Projects() {
                                         {project.tech.map((tech, techIndex) => (
                                             <span
                                                 key={techIndex}
-                                                className="px-3 py-1 rounded-full text-xs font-semibold bg-[#1a1f3a] text-[#00f0ff] border border-[#1e293b] tracking-wider"
+                                                className="px-3 py-1 rounded-full text-xs font-semibold bg-[#0a0e27]/50 text-[#00f0ff] border border-[#00f0ff]/30 tracking-wider backdrop-blur-sm"
                                             >
                                                 {tech}
                                             </span>

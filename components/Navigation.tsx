@@ -26,59 +26,58 @@ export default function Navigation() {
 
     return (
         <motion.nav
-            style={{ opacity }}
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-[#0a0e27]/90 backdrop-blur-lg border-b border-[#1e293b]' : ''
-                }`}
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="fixed z-50 left-1/2 transform -translate-x-1/2 bottom-6 md:bottom-auto md:top-8 w-[90%] md:w-auto"
         >
-            <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-                <div className="flex items-center justify-between h-20">
-                    {/* Logo */}
-                    <motion.a
-                        href="#"
-                        className="text-2xl font-black tracking-wider"
-                        style={{ fontFamily: 'Orbitron, sans-serif' }}
-                        whileHover={{ scale: 1.05 }}
-                    >
-                        <span className="bg-gradient-to-r from-[#00f0ff] to-[#ff006e] bg-clip-text text-transparent">
-                            SC
-                        </span>
-                    </motion.a>
+            <div className="glassmorphism rounded-full px-6 py-4 md:py-3 flex items-center justify-between gap-8 shadow-[0_0_20px_rgba(0,240,255,0.15)] hover:shadow-[0_0_30px_rgba(0,240,255,0.3)] transition-all duration-300">
+                {/* Logo */}
+                <motion.a
+                    href="#"
+                    className="text-2xl font-black tracking-wider flex-shrink-0"
+                    style={{ fontFamily: 'Orbitron, sans-serif' }}
+                    whileHover={{ scale: 1.05 }}
+                >
+                    <span className="bg-gradient-to-r from-[#00f0ff] to-[#ff006e] bg-clip-text text-transparent">
+                        SC
+                    </span>
+                </motion.a>
 
-                    {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center gap-8">
-                        {navItems.map((item, index) => (
-                            <motion.a
-                                key={index}
-                                href={item.href}
-                                className="relative text-[#e0e7ff] font-semibold tracking-wider hover:text-[#00f0ff] transition-colors duration-300 group"
-                                whileHover={{ scale: 1.05 }}
-                            >
-                                {item.name}
-                                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#00f0ff] to-[#ff006e] group-hover:w-full transition-all duration-300" />
-                            </motion.a>
-                        ))}
-                    </div>
-
-                    {/* CTA Button */}
-                    <motion.a
-                        href="#contact"
-                        className="hidden md:block rounded-full px-6 py-2 border-2 border-[#00f0ff] text-[#00f0ff] font-semibold tracking-wider hover:bg-[#00f0ff] hover:text-[#0a0e27] transition-all duration-300"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        HIRE ME
-                    </motion.a>
-
-                    {/* Mobile Menu Button */}
-                    <motion.button
-                        className="md:hidden flex flex-col space-y-1.5"
-                        whileTap={{ scale: 0.9 }}
-                    >
-                        <span className="block w-6 h-0.5 bg-[#00f0ff]" />
-                        <span className="block w-6 h-0.5 bg-[#ff006e]" />
-                        <span className="block w-6 h-0.5 bg-[#8b5cf6]" />
-                    </motion.button>
+                {/* Desktop Navigation */}
+                <div className="hidden md:flex items-center gap-8">
+                    {navItems.map((item, index) => (
+                        <motion.a
+                            key={index}
+                            href={item.href}
+                            className="relative text-[#e0e7ff] text-sm font-semibold tracking-wider hover:text-[#00f0ff] transition-colors duration-300 group"
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            {item.name}
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#00f0ff] to-[#ff006e] group-hover:w-full transition-all duration-300" />
+                        </motion.a>
+                    ))}
                 </div>
+
+                {/* CTA Button */}
+                <motion.a
+                    href="#contact"
+                    className="hidden md:block rounded-full px-5 py-2 bg-[#00f0ff] text-[#0a0e27] text-sm font-bold tracking-wider hover:bg-[#ff006e] hover:text-white transition-all duration-300 shadow-[0_0_10px_rgba(0,240,255,0.5)] hover:shadow-[0_0_20px_rgba(255,0,110,0.6)]"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    HIRE ME
+                </motion.a>
+
+                {/* Mobile Menu Button - maintained for mobile responsiveness */}
+                <motion.button
+                    className="md:hidden flex flex-col space-y-1.5 ml-auto"
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <span className="block w-6 h-0.5 bg-[#00f0ff]" />
+                    <span className="block w-6 h-0.5 bg-[#ff006e]" />
+                    <span className="block w-6 h-0.5 bg-[#8b5cf6]" />
+                </motion.button>
             </div>
         </motion.nav>
     );

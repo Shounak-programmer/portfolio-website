@@ -22,25 +22,25 @@ export default function Contact() {
         {
             name: 'GitHub',
             icon: '⚡',
-            url: 'https://github.com',
+            url: 'https://github.com/Shounak-programmer',
             color: '#00f0ff',
         },
         {
             name: 'LinkedIn',
             icon: '💼',
-            url: 'https://linkedin.com',
+            url: 'https://www.linkedin.com/in/shounak-chatterjee-45480a258/',
             color: '#0080ff',
         },
         {
             name: 'Twitter',
             icon: '🐦',
-            url: 'https://twitter.com',
+            url: 'https://x.com/user_shounak',
             color: '#00f0ff',
         },
         {
             name: 'Email',
             icon: '✉️',
-            url: 'mailto:shounak@example.com',
+            url: 'mailto:shhounakchatterjee@gmail.com',
             color: '#ff006e',
         },
     ];

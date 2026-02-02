@@ -45,15 +45,22 @@ export default function Footer() {
                     <div>
                         <h4 className="text-[#ff006e] font-bold mb-4 tracking-wider">CONNECT</h4>
                         <div className="flex space-x-4">
-                            {['GitHub', 'LinkedIn', 'Twitter', 'Email'].map((social, index) => (
+                            {[
+                                { name: 'GitHub', url: 'https://github.com/Shounak-programmer' },
+                                { name: 'LinkedIn', url: 'https://www.linkedin.com/in/shounak-chatterjee-45480a258/' },
+                                { name: 'Twitter', url: 'https://x.com/user_shounak' },
+                                { name: 'Email', url: 'mailto:shhounakchatterjee@gmail.com' }
+                            ].map((social, index) => (
                                 <motion.a
                                     key={index}
-                                    href="#"
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="w-10 h-10 border border-[#1e293b] flex items-center justify-center text-[#94a3b8] hover:text-[#00f0ff] hover:border-[#00f0ff] transition-all duration-300"
                                     whileHover={{ scale: 1.1, rotate: 5 }}
                                     whileTap={{ scale: 0.9 }}
                                 >
-                                    {social[0]}
+                                    {social.name[0]}
                                 </motion.a>
                             ))}
                         </div>

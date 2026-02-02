@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Shounak Chatterjee | Full Stack Developer",
     description: "Full Stack Developer crafting innovative digital experiences",
-    creator: "@shounakdev",
+    creator: "@user_shounak",
   },
   viewport: {
     width: 'device-width',

@@ -58,10 +58,10 @@ export default function Contact() {
                 >
                     <h2 className="text-5xl md:text-6xl font-black mb-4 bg-gradient-to-r from-[#ff006e] to-[#00f0ff] bg-clip-text text-transparent"
                         style={{ fontFamily: 'Orbitron, sans-serif' }}>
-                        LET'S CONNECT
+                        LET&apos;S CONNECT
                     </h2>
                     <p className="text-xl text-[#94a3b8] max-w-2xl mx-auto">
-                        Have a project in mind? Let's build something amazing together.
+                        Have a project in mind? Let&apos;s build something amazing together.
                     </p>
                 </motion.div>
 

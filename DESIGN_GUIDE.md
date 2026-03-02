@@ -1,243 +1,225 @@
-# Portfolio Website - Visual Design Guide
+# Design Guide
 
-## 🎨 Design Aesthetic: Cyberpunk/Hacker Theme
-
-This portfolio features a dark, futuristic cyberpunk aesthetic inspired by hacker culture and sci-fi interfaces.
-
-## 🌈 Color Scheme
-
-### Primary Colors
-- **Cyber Cyan**: `#00f0ff` - Used for primary text, borders, and accents
-- **Hot Pink**: `#ff006e` - Used for secondary accents and CTAs
-- **Purple**: `#8b5cf6` - Used for tertiary accents
-
-### Background Colors
-- **Primary BG**: `#0a0e27` - Deep dark blue, main background
-- **Secondary BG**: `#0f1429` - Slightly lighter, for cards
-- **Tertiary BG**: `#1a1f3a` - For nested elements
-
-### Text Colors
-- **Primary Text**: `#e0e7ff` - Light lavender for main text
-- **Muted Text**: `#94a3b8` - Slate gray for secondary text
-- **Border**: `#1e293b` - Dark slate for borders
-
-### Accent Colors
-- **Success**: `#00ff88` - Bright green
-- **Warning**: `#ffbe0b` - Bright yellow
-
-## 📐 Layout Structure
-
-### 1. Navigation Bar
-- **Position**: Fixed at top, appears on scroll
-- **Style**: Semi-transparent with backdrop blur
-- **Elements**: Logo (SC), nav links, "HIRE ME" button
-- **Effect**: Smooth fade-in on scroll
-
-### 2. Hero Section
-```
-┌─────────────────────────────────────────┐
-│         < DEVELOPER />                   │
-│                                          │
-│         ███████  ██   ██  ██████         │
-│         ██       ██   ██  ██   ██        │
-│         ███████  ███████  ██   ██        │  ← Large glowing name
-│              ██  ██   ██  ██   ██        │    with glitch effect
-│         ███████  ██   ██  ██████         │
-│                                          │
-│    Full Stack Developer • Creative Coder │
-│                                          │
-│    [GET IN TOUCH]  [VIEW PROJECTS]       │
-│                                          │
-│  ▸ React ▸ Next.js ▸ TypeScript ▸ ...   │  ← Infinite ticker
-└─────────────────────────────────────────┘
-```
-
-**Key Features**:
-- Massive name with gradient (cyan → purple → pink)
-- Glitch effect layers
-- Mouse-following gradient orbs
-- Infinite scrolling tech stack ticker
-- Animated scroll indicator
-
-### 3. Bento Grid (Skills Section)
-```
-┌──────────────┬──────┬──────┐
-│              │      │      │
-│  Full Stack  │  UI  │Cloud │
-│  Development │  UX  │DevOps│
-│              │      │      │
-├──────┬───────┴──────┴──────┤
-│ API  │  Database  │  Perf  │
-│ Dev  │   Design   │  Opt   │
-└──────┴────────────┴────────┘
-```
-
-**Card Features**:
-- Hover effects with gradient overlays
-- Rotating emoji icons
-- Corner accent lines
-- Glow effects on hover
-- Varied sizes (1x1, 2x2, 2x1)
-
-### 4. Projects Section
-```
-┌─────────┬─────────┬─────────┐
-│ <01 />  │ <02 />  │ <03 />  │
-│ Project │ Project │ Project │
-│ Title   │ Title   │ Title   │
-│         │         │         │
-│ Desc... │ Desc... │ Desc... │
-│         │         │         │
-│ [Tags]  │ [Tags]  │ [Tags]  │
-│ View →  │ View →  │ View →  │
-└─────────┴─────────┴─────────┘
-```
-
-**Card Features**:
-- Project number in code format
-- Gradient overlays on hover
-- Tech stack tags
-- Animated arrow on hover
-- Lift effect (translateY)
-
-### 5. Contact Section
-```
-┌─────────────────────────────────────┐
-│         LET'S CONNECT               │
-│                                     │
-│  ┌──────────┐  ┌─────────────────┐ │
-│  │ Name     │  │  QUICK INFO     │ │
-│  │ Email    │  │  • Location     │ │
-│  │ Message  │  │  • Availability │ │
-│  │          │  │  • Response     │ │
-│  │ [SEND]   │  │                 │ │
-│  └──────────┘  │  [Social Links] │ │
-│                └─────────────────┘ │
-└─────────────────────────────────────┘
-```
-
-**Features**:
-- Interactive form with glow effects
-- Social media cards with icons
-- Quick info panel
-- Hover animations
-
-### 6. Footer
-- Brand name and tagline
-- Quick links
-- Social icons
-- Copyright info
-- Bottom gradient line
-
-## ✨ Animation Effects
-
-### Background Effects
-1. **Animated Grid**: Moving cyberpunk grid pattern (50px squares)
-2. **Scanlines**: Horizontal lines moving down (CRT effect)
-3. **Gradient Orbs**: Mouse-following blurred circles
-
-### Text Effects
-1. **Glitch**: RGB split effect on hero name
-2. **Neon Pulse**: Pulsing glow on text
-3. **Gradient Text**: Smooth color transitions
-
-### Interaction Effects
-1. **Hover Lift**: Cards lift up on hover
-2. **Border Glow**: Glowing borders appear
-3. **Icon Rotation**: Icons rotate 360° on hover
-4. **Scale**: Buttons scale on hover/tap
-5. **Gradient Overlay**: Colored overlays fade in
-
-### Scroll Effects
-1. **Fade In**: Elements fade in as you scroll
-2. **Slide Up**: Content slides up on reveal
-3. **Stagger**: Sequential animation delays
-
-## 🎭 Interactive Elements
-
-### Buttons
-- **Primary**: Cyan border, fills on hover
-- **Secondary**: Pink/purple gradient background
-- **Hover**: Glow effect, scale transform
-
-### Cards
-- **Default**: Dark background, subtle border
-- **Hover**: Gradient overlay, border glow, lift effect
-
-### Forms
-- **Inputs**: Dark background, cyan border on focus
-- **Focus**: Glow effect around input
-
-## 📱 Responsive Design
-
-### Breakpoints
-- **Mobile**: < 768px (single column)
-- **Tablet**: 768px - 1024px (2 columns)
-- **Desktop**: > 1024px (3 columns)
-
-### Mobile Adaptations
-- Smaller text sizes
-- Single column layouts
-- Hamburger menu
-- Touch-optimized buttons
-
-## 🔤 Typography
-
-### Font Families
-1. **Orbitron**: Display font for headings
-   - Weights: 400-900
-   - Use: Large titles, section headers
-
-2. **Rajdhani**: Body font
-   - Weights: 300-700
-   - Use: Paragraphs, descriptions
-
-3. **Share Tech Mono**: Code font
-   - Weight: 400
-   - Use: Code snippets, tags
-
-### Font Sizes
-- **Hero Name**: 6xl - 9xl (96px - 128px)
-- **Section Headers**: 5xl - 6xl (48px - 60px)
-- **Card Titles**: 2xl (24px)
-- **Body**: base - xl (16px - 20px)
-- **Small**: sm - xs (12px - 14px)
-
-## 🌟 Special Effects
-
-### Scrollbar
-- Custom styled with cyan color
-- Glowing thumb
-- Dark track
-
-### Selection
-- Cyan background
-- Dark text
-
-### Loading State
-- Spinning ring animation
-- Pulsing center dot
-- "LOADING..." text
-
-## 🎯 User Experience
-
-### Performance
-- Optimized animations (GPU-accelerated)
-- Lazy loading for images
-- Code splitting
-
-### Accessibility
-- Semantic HTML
-- Proper heading hierarchy
-- Keyboard navigation
-- Focus indicators
-
-### SEO
-- Meta tags
-- Open Graph
-- Descriptive titles
-- Alt text for images
+A reference for the visual language, design tokens, and component patterns used throughout the portfolio.
 
 ---
 
-**This design creates a premium, futuristic portfolio that stands out and showcases technical expertise through its very construction.**
+## Design Philosophy
+
+The site follows a **natural, warm, and elegant** aesthetic — think linen, sage, and terracotta rather than neon. The goal is to feel premium and approachable at the same time.
+
+Key principles:
+- **Warmth** — earthy tones and warm darks instead of cold blacks
+- **Glassmorphism** — frosted glass cards with backdrop blur
+- **Subtle motion** — animations that feel smooth, not flashy
+- **Breathing room** — generous padding and whitespace
+
+---
+
+## Colour Palette
+
+### Brand Colours
+
+| Name | Variable | Hex | Usage |
+|---|---|---|---|
+| Sage Green | `--sage-primary` | `#7a9e7e` | Primary accent, hero gradient |
+| Terracotta | `--terracotta` | `#c17a5a` | Secondary accent, CTAs |
+| Warm Gold | `--warm-gold` | `#c8a96e` | Labels, highlights |
+| Muted Blush | `--muted-blush` | `#d4a8a0` | Soft accents, tags |
+| Light Sage | `--sage-light` | `#9dbc9f` | Hover states |
+
+### Surface & Background
+
+| Name | Variable | Value | Usage |
+|---|---|---|---|
+| Page Background | `--bg-primary` | `#0f0e0c` | Root background |
+| Card Surface | `--glassmorphism` | `rgba(30,27,24,0.8)` + blur | All cards |
+| Subtle Border | `--border-subtle` | `rgba(255,255,255,0.08)` | Card borders |
+| Hover Border | Per-card `accentColor` + `44` alpha | — | On-hover card borders |
+
+### Text
+
+| Name | Variable | Value |
+|---|---|---|
+| Primary Text | `--text-primary` | `#f5f0eb` |
+| Secondary Text | `--text-secondary` | `#a09080` |
+| Gradient Sage | `.text-gradient-sage` | `#7a9e7e` → `#c8a96e` |
+
+---
+
+## Typography
+
+### Font Families
+
+| Font | Role | CSS Variable |
+|---|---|---|
+| **Playfair Display** | Headings, card titles, section headers | `--font-playfair` |
+| **Inter** | Body copy, descriptions, labels | `--font-inter` (base) |
+
+Loaded via `next/font/google` in `app/layout.js`.
+
+### Font Scale
+
+| Element | Size | Weight |
+|---|---|---|
+| Hero name | `clamp(3.5rem, 10vw, 8rem)` | 900 |
+| Section heading | `clamp(2.2rem, 5vw, 3.5rem)` | 800 |
+| Card title | `1.3rem` | 700 |
+| Body / description | `0.9rem – 1.05rem` | 400 |
+| Section label | `0.75rem` uppercase tracked | 600 |
+
+---
+
+## Layout
+
+### Page Structure
+
+```
+┌────────────────────────────────────┐
+│  Navigation (sticky, blur)         │
+├────────────────────────────────────┤
+│  Hero                              │  Full viewport height
+│  ┌──────────────┐                  │  Name + ticker
+│  │ Name         │ ← animated       │
+│  │ Tagline      │                  │
+│  │ CTA Buttons  │                  │
+│  └──────────────┘                  │
+│  ─── Tech Stack Ticker ───         │
+├────────────────────────────────────┤
+│  Skills (Bento Grid)               │  3-column grid
+│  ┌──────────┬────┬────┐            │
+│  │  2×2     │ 1  │ 1  │            │
+│  │  card    ├────┴────┤            │
+│  │          │ 1  │ 1  │            │
+│  └──────────┴────┴────┘            │
+├────────────────────────────────────┤
+│  Projects                          │  Alternating or grid
+├────────────────────────────────────┤
+│  Contact                           │  Form + social links
+├────────────────────────────────────┤
+│  Footer                            │
+└────────────────────────────────────┘
+```
+
+### Max Width & Spacing
+
+- **Container max-width**: `1200px`, centred with `auto` margins
+- **Section padding**: `120px` vertical, `24px` horizontal
+- **Grid gap**: `20px`
+- **Card padding**: `32px` (`p-8`)
+- **Border radius**: `24px` (`rounded-3xl`)
+
+---
+
+## Glassmorphism Cards
+
+Cards use the `.glassmorphism` utility class defined in `globals.css`:
+
+```css
+.glassmorphism {
+  background: rgba(30, 27, 24, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+```
+
+On hover, cards get:
+- `y: -4px` lift (Framer Motion)
+- Accent-coloured border (`accentColor + '44'` alpha)
+- Soft box shadow with accent glow
+- Gradient overlay (`opacity: 0 → 0.06`)
+- Top accent bar (`opacity: 0 → 1`)
+
+---
+
+## Animation Patterns
+
+### Scroll Reveal (all sections)
+```jsx
+<motion.div
+  initial={{ opacity: 0, y: 24 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.55, delay: index * 0.08 }}
+  viewport={{ once: true }}
+>
+```
+
+### Card Hover (BentoGrid / Projects)
+```jsx
+whileHover={{
+  y: -4,
+  borderColor: `${accentColor}44`,
+  boxShadow: `0 20px 60px rgba(0,0,0,0.3), 0 0 30px ${accentColor}18`,
+}}
+transition={{ duration: 0.35 }}
+```
+
+### Icon Bounce on Hover
+```jsx
+animate={{ scale: isHovered ? 1.1 : 1, rotate: isHovered ? 5 : 0 }}
+transition={{ duration: 0.4, type: 'spring', stiffness: 200 }}
+```
+
+### Infinite Ticker (Hero)
+CSS `@keyframes scroll` with `translateX(-50%)` on a duplicated list, using `animation-play-state: paused` on hover.
+
+---
+
+## Section Labels
+
+A reusable `.section-label` pattern is used before every section heading:
+
+```html
+<span class="section-label">What I do</span>
+```
+
+```css
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--warm-gold);
+}
+/* Decorative line before the label */
+.section-label::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--warm-gold);
+}
+```
+
+---
+
+## Responsive Behaviour
+
+| Breakpoint | Grid columns | Notes |
+|---|---|---|
+| Mobile (`< 768px`) | 1 | Bento grid stacks, nav collapses |
+| Tablet (`768–1024px`) | 2 | Partial bento layout |
+| Desktop (`> 1024px`) | 3 | Full 3-column bento |
+
+---
+
+## Ambient Glow Decorations
+
+Each section has absolute-positioned blurred radial gradient orbs behind the content for depth:
+
+```jsx
+<div style={{
+  position: 'absolute', top: '5%', left: '-5%',
+  width: '400px', height: '400px',
+  background: 'radial-gradient(circle, rgba(122,158,126,0.06) 0%, transparent 70%)',
+  filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none',
+}} />
+```
+
+These are purely decorative and never interfere with interactions (`pointerEvents: 'none'`).
+
+---
+
+**The design scales from very small screens to 4K — always test at multiple sizes after changes.**

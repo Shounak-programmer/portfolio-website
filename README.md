@@ -1,119 +1,82 @@
-# Shounak Chatterjee - Portfolio Website
+# Shounak Chatterjee — Portfolio Website
 
-A stunning cyberpunk/hacker-themed portfolio website built with Next.js, Tailwind CSS, and Framer Motion.
+A modern, elegant portfolio website built with **Next.js**, **Tailwind CSS**, and **Framer Motion**, featuring a natural, warm colour palette with glassmorphism effects and smooth animations.
 
-## 🚀 Features
+🌐 **Live:** [shounakchatterjee.tech](https://shounakchatterjee.tech)
 
-- **Cyberpunk Aesthetic**: Dark mode with neon colors, glowing effects, and animated backgrounds
-- **Hero Section**: Large animated name with glitch effects and infinite tech stack ticker
-- **Bento Grid Layout**: Modern grid showcasing skills and expertise with hover animations
-- **Projects Showcase**: Featured projects with tech stack tags and smooth animations
-- **Contact Section**: Interactive contact form with social links
-- **Fully Responsive**: Optimized for all screen sizes
-- **Smooth Animations**: Powered by Framer Motion for buttery-smooth interactions
-- **SEO Optimized**: Proper meta tags and semantic HTML
+---
 
-## 🎨 Design Elements
+## ✨ Features
 
-- **Animated Grid Background**: Moving cyberpunk grid pattern
-- **Scanline Effect**: Retro CRT monitor scanlines
-- **Glitch Effects**: Text glitch animations on hero section
-- **Neon Glow**: Pulsing neon text and border effects
-- **Custom Scrollbar**: Themed scrollbar with glow effects
-- **Gradient Orbs**: Interactive gradient backgrounds that follow mouse movement
-- **Tech Stack Ticker**: Infinite scrolling ticker showcasing technologies
+- **Elegant Natural Theme** — Warm earthy tones, sage greens, and terracotta with glassmorphism cards
+- **Hero Section** — Animated name reveal with an infinite tech-stack ticker
+- **Bento Grid Skills** — Interactive cards showcasing areas of expertise with hover animations
+- **Projects Showcase** — Featured projects with tech-stack tags and smooth scroll animations
+- **Contact Section** — Interactive contact form with social links
+- **Fully Responsive** — Optimised for all screen sizes and devices
+- **Smooth Animations** — Powered by Framer Motion for buttery-smooth transitions
+- **SEO Optimised** — Proper meta tags and semantic HTML structure
+
+---
+
+## 🎨 Design
+
+| Element | Detail |
+|---|---|
+| Theme | Natural, warm, and elegant — earthy greens & terracotta |
+| UI Style | Glassmorphism cards with subtle gradients and blur |
+| Animations | Framer Motion — fade-ins, hover lifts, spring physics |
+| Typography | Playfair Display (headings) + Inter (body) |
+| Scrollbar | Custom-styled to match the overall palette |
+| Backgrounds | Radial ambient glow decorations |
+
+### 🎨 Colour Palette
+
+| Role | Colour |
+|---|---|
+| Sage Green (primary) | `#7a9e7e` |
+| Terracotta | `#c17a5a` |
+| Warm Gold | `#c8a96e` |
+| Muted Blush | `#d4a8a0` |
+| Background | `#0f0e0c` (warm dark) |
+| Surface | `rgba(30, 27, 24, 0.8)` (glassmorphism) |
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 16 with App Router
-- **Styling**: Tailwind CSS v4
-- **Animations**: Framer Motion
-- **Language**: TypeScript
-- **Fonts**: Orbitron, Rajdhani, Share Tech Mono (Google Fonts)
+| Category | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | JavaScript (React JSX) |
+| Styling | Tailwind CSS v4 + Vanilla CSS Variables |
+| Animations | Framer Motion 12 |
+| Fonts | Playfair Display, Inter (Google Fonts) |
+| Deployment | Vercel |
 
-## 📦 Installation
+---
 
-The project is already set up! The dependencies have been installed.
+## 📦 Getting Started
 
-## 🏃‍♂️ Running the Project
+### Prerequisites
+- Node.js 18+
+- npm
 
-The development server is currently running at:
-- **Local**: http://localhost:3000
-- **Network**: http://192.168.153.1:3000
-
-To start the dev server again in the future:
+### Install & Run
 
 ```bash
+# Clone the repo
+git clone https://github.com/Shounak-programmer/portfolio-website.git
+cd portfolio-website
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 ```
 
-## 📁 Project Structure
-
-```
-portfolio website/
-├── app/
-│   ├── globals.css          # Global styles with cyberpunk theme
-│   ├── layout.tsx            # Root layout with metadata
-│   └── page.tsx              # Main page component
-├── components/
-│   ├── Navigation.tsx        # Sticky navigation bar
-│   ├── Hero.tsx              # Hero section with name and ticker
-│   ├── BentoGrid.tsx         # Skills showcase in bento grid
-│   ├── Projects.tsx          # Featured projects section
-│   ├── Contact.tsx           # Contact form and social links
-│   └── Footer.tsx            # Footer component
-└── public/                   # Static assets
-```
-
-## 🎯 Sections
-
-1. **Navigation**: Sticky header with smooth scroll links
-2. **Hero**: Large animated name with glitch effects and tech stack ticker
-3. **Skills (Bento Grid)**: Expertise showcase with interactive cards
-4. **Projects**: Featured work with hover effects and tech tags
-5. **Contact**: Contact form and social media links
-6. **Footer**: Brand info and quick links
-
-## 🎨 Color Palette
-
-- **Primary**: `#00f0ff` (Cyan)
-- **Secondary**: `#ff006e` (Pink)
-- **Accent**: `#8b5cf6` (Purple)
-- **Success**: `#00ff88` (Green)
-- **Warning**: `#ffbe0b` (Yellow)
-- **Background**: `#0a0e27` (Dark Blue)
-
-## ✨ Customization
-
-### Update Personal Information
-
-1. **Name**: Edit `components/Hero.tsx` - Change "SHOUNAK" and "CHATTERJEE"
-2. **Skills**: Edit `components/BentoGrid.tsx` - Modify the `cards` array
-3. **Projects**: Edit `components/Projects.tsx` - Update the `projects` array
-4. **Contact Info**: Edit `components/Contact.tsx` - Update social links and info
-5. **Tech Stack**: Edit `components/Hero.tsx` - Modify the `techStack` array
-
-### Customize Colors
-
-Edit `app/globals.css` and modify the CSS variables in the `:root` section:
-
-```css
-:root {
-  --cyber-primary: #00f0ff;
-  --cyber-secondary: #ff006e;
-  --cyber-accent: #8b5cf6;
-  /* ... more colors */
-}
-```
-
-## 🚀 Deployment
-
-### Deploy to Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Visit [vercel.com](https://vercel.com)
-3. Import your repository
-4. Deploy!
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Build for Production
 
@@ -122,24 +85,92 @@ npm run build
 npm start
 ```
 
-## 📝 Notes
+---
 
-- The `@theme` warning in CSS is expected - it's a Tailwind CSS v4 feature
-- All animations are optimized for performance
-- The website is fully responsive and works on all devices
-- Custom fonts are loaded from Google Fonts
+## 📁 Project Structure
 
-## 🎭 Browser Compatibility
-
-- Chrome/Edge (recommended)
-- Firefox
-- Safari
-- Opera
-
-## 📄 License
-
-Feel free to use this portfolio template for your own projects!
+```
+portfolio-website/
+├── app/
+│   ├── globals.css          # Global styles & CSS design tokens
+│   ├── layout.js            # Root layout with metadata & fonts
+│   └── page.js              # Main page — assembles all sections
+├── components/
+│   ├── Navigation.jsx        # Sticky navigation bar
+│   ├── Hero.jsx              # Hero section with name & tech ticker
+│   ├── BentoGrid.jsx         # Skills showcase in bento grid layout
+│   ├── Projects.jsx          # Featured projects section
+│   ├── Contact.jsx           # Contact form and social links
+│   └── Footer.jsx            # Footer with quick links
+└── public/                   # Static assets
+```
 
 ---
 
-**Built with ❤️ using Next.js, Tailwind CSS, and Framer Motion**
+## 🎯 Page Sections
+
+1. **Navigation** — Sticky header with smooth-scroll links and active state
+2. **Hero** — Animated name with subtitle and infinite tech-stack ticker
+3. **Skills (Bento Grid)** — Expertise cards with interactive hover effects
+4. **Projects** — Featured work with descriptions, tech tags, and links
+5. **Contact** — Contact form and social media links
+6. **Footer** — Branding and quick navigation links
+
+---
+
+## ✏️ Customisation
+
+### Personal Information
+
+| What to change | Where |
+|---|---|
+| Name & tagline | `components/Hero.jsx` |
+| Tech stack ticker | `components/Hero.jsx` → `techStack` array |
+| Skills cards | `components/BentoGrid.jsx` → `cards` array |
+| Projects | `components/Projects.jsx` → `projects` array |
+| Contact & social links | `components/Contact.jsx` |
+
+### Colours & Design Tokens
+
+All design tokens live in `app/globals.css` under `:root`:
+
+```css
+:root {
+  --sage-primary: #7a9e7e;
+  --terracotta: #c17a5a;
+  --warm-gold: #c8a96e;
+  --bg-primary: #0f0e0c;
+  /* ... */
+}
+```
+
+---
+
+## 🚀 Deployment
+
+This site is deployed on **Vercel** and connected to the custom domain `shounakchatterjee.tech`.
+
+To deploy your own fork:
+1. Push the repo to GitHub
+2. Import it at [vercel.com](https://vercel.com)
+3. Set the framework preset to **Next.js**
+4. Hit **Deploy** — you're live!
+
+---
+
+## 🌐 Browser Compatibility
+
+- ✅ Chrome / Edge
+- ✅ Firefox
+- ✅ Safari
+- ✅ Opera
+
+---
+
+## 📄 License
+
+Feel free to use this as a template for your own portfolio. A credit or a ⭐ on the repo is appreciated!
+
+---
+
+**Built with ❤️ by Shounak Chatterjee — using Next.js, Tailwind CSS, and Framer Motion**

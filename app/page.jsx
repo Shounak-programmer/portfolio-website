@@ -6,20 +6,14 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  return (
-    <div className="relative">
-      <Navigation />
-      <br></br>
-      <Hero />
-      <br></br>
-      <BentoGrid />
-      <br></br>
-      <Projects />
-      <br></br>
-      <Contact />
-      <br></br>
-      <Footer />
-    </div>
-  );
+    return (
+        <div className="relative">
+            <Navigation />
+            <Hero />
+            <BentoGrid />
+            <Projects />
+            <Contact />
+            <Footer />
+        </div>
+    );
 }
-

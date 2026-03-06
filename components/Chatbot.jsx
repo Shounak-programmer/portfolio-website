@@ -118,9 +118,23 @@ export default function Chatbot() {
                                     color: msg.role === 'user' ? '#fff' : 'var(--text-primary)',
                                     fontSize: '0.9rem',
                                     lineHeight: 1.5,
-                                    border: msg.role === 'user' ? 'none' : '1px solid var(--border-subtle)'
+                                    border: msg.role === 'user' ? 'none' : '1px solid var(--border-subtle)',
+                                    wordBreak: 'break-word',
                                 }}>
-                                    {msg.content}
+                                    {/* Simple Markdown-like formatting Tool */}
+                                    {msg.content.split('\n').map((line, k) => {
+                                        if (!line.trim()) return <div key={k} style={{ height: '8px' }} />;
+
+                                        // Simple regex for bolding as suggested: "either use formatting tools or..."
+                                        const formattedLine = line.split(/(\*\*.*?\*\*)/).map((part, j) => {
+                                            if (part.startsWith('**') && part.endsWith('**')) {
+                                                return <strong key={j} style={{ fontWeight: '700', color: msg.role === 'user' ? '#fff' : 'var(--accent-sage-light)' }}>{part.slice(2, -2)}</strong>;
+                                            }
+                                            return part;
+                                        });
+
+                                        return <div key={k} style={{ marginBottom: k < msg.content.split('\n').length - 1 ? '4px' : 0 }}>{formattedLine}</div>;
+                                    })}
                                 </div>
                             ))}
                             {isLoading && (

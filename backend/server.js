@@ -131,6 +131,67 @@ app.patch('/api/admin/contacts/:id/read', requireAdminToken, (req, res) => {
     res.json({ success: true });
 });
 
+// ─── AI Chatbot: Hugging Face Proxy ──────────────────────────────────────────
+app.post('/api/chat', async (req, res) => {
+    const { message, history } = req.body;
+
+    if (!message) {
+        return res.status(400).json({ error: 'Message is required.' });
+    }
+
+    const HUGGINGFACE_TOKEN = process.env.HUGGINGFACE_TOKEN;
+    const MODEL_ID = process.env.HUGGINGFACE_MODEL_ID || "mistralai/Mistral-7B-Instruct-v0.2";
+
+    if (!HUGGINGFACE_TOKEN) {
+        return res.json({ reply: "I'm currently in 'offline mode' (HuggingFace token missing). Shounak is a Full Stack Developer specializing in React and Node.js. How can he help you?" });
+    }
+
+    // System prompt to give the AI context about Shounak
+    const systemPrompt = `You are an AI assistant for Shounak Chatterjee's portfolio website. 
+    Shounak is a Full Stack Developer based in India.
+    Skills: React, Next.js, Node.js, Express, SQLite, Tailwind CSS, Framer Motion.
+    Projects: 1. Cyberpunk Portfolio, 2. Smart Traffic System (IDP).
+    Tone: Helpful, professional, and slightly friendly.
+    If asked about payments, mention that he takes projects on a contract basis and payments are usually via UPI or bank transfer after discussing the project scope.
+    Keep answers concise. Always stay in character as Shounak's helpful assistant.`;
+
+    try {
+        // Construct simple prompt format for Mistral-like models
+        // Using Inference API (Serverless)
+        const response = await fetch(
+            `https://api-inference.huggingface.co/models/${MODEL_ID}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${HUGGINGFACE_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    inputs: `<s>[INST] ${systemPrompt} \n\n User history: ${JSON.stringify(history.slice(-3))} \n\n Current Question: ${message} [/INST]`,
+                    parameters: { max_new_tokens: 250, temperature: 0.7 }
+                }),
+            }
+        );
+
+        const result = await response.json();
+
+        // Handle different Hugging Face response formats
+        let reply = "";
+        if (Array.isArray(result) && result[0]?.generated_text) {
+            reply = result[0].generated_text.split('[/INST]').pop().trim();
+        } else if (result.generated_text) {
+            reply = result.generated_text.split('[/INST]').pop().trim();
+        } else {
+            reply = "I'm processing that... Shounak says hello! (API response format error)";
+        }
+
+        res.json({ reply });
+    } catch (err) {
+        console.error('Hugging Face API error:', err);
+        res.status(500).json({ error: 'AI failed to respond.' });
+    }
+});
+
 // ─── Admin: Delete Contact ───────────────────────────────────────────────
 app.delete('/api/admin/contacts/:id', requireAdminToken, (req, res) => {
     const id = parseInt(req.params.id);

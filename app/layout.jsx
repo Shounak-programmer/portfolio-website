@@ -86,6 +86,8 @@ export const metadata = {
     manifest: '/site.webmanifest',
 };
 
+import Chatbot from "@/components/Chatbot";
+
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
@@ -94,6 +96,7 @@ export default function RootLayout({ children }) {
                 style={{ fontFamily: 'var(--font-inter), sans-serif' }}
             >
                 {children}
+                <Chatbot />
             </body>
         </html>
     );

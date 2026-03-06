@@ -1,0 +1,203 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+export default function Chatbot() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [messages, setMessages] = useState([
+        { role: 'assistant', content: "Hello! I'm Shounak's AI assistant. How can I help you today?" }
+    ]);
+    const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    const handleSend = async (e) => {
+        e.preventDefault();
+        if (!input.trim() || isLoading) return;
+
+        const userMessage = { role: 'user', content: input };
+        setMessages(prev => [...prev, userMessage]);
+        setInput('');
+        setIsLoading(true);
+
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: input, history: messages }),
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch');
+
+            const data = await response.json();
+            setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
+        } catch (error) {
+            setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting to my brain right now. Please try again later." }]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 1000 }}>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        style={{
+                            position: 'absolute',
+                            bottom: '80px',
+                            right: 0,
+                            width: '380px',
+                            height: '520px',
+                            background: 'var(--bg-card)',
+                            backdropFilter: 'blur(20px)',
+                            border: '1px solid var(--border-subtle)',
+                            borderRadius: '24px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            overflow: 'hidden',
+                            boxShadow: '0 24px 48px rgba(0,0,0,0.4)',
+                        }}
+                    >
+                        {/* Header */}
+                        <div style={{
+                            padding: '20px 24px',
+                            background: 'linear-gradient(135deg, rgba(122, 158, 126, 0.15), rgba(193, 122, 90, 0.1))',
+                            borderBottom: '1px solid var(--border-subtle)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <div style={{
+                                    width: '10px',
+                                    height: '10px',
+                                    borderRadius: '50%',
+                                    background: 'var(--accent-sage-light)',
+                                    boxShadow: '0 0 10px var(--accent-sage)'
+                                }} />
+                                <span style={{ fontFamily: 'var(--font-playfair), serif', fontWeight: 700, fontSize: '1.1rem' }}>AI Assistant</span>
+                            </div>
+                            <button
+                                onClick={() => setIsOpen(false)}
+                                style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '1.2rem' }}
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Messages */}
+                        <div style={{ flex: 1, overflowY: 'auto', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                            {messages.map((msg, i) => (
+                                <div key={i} style={{
+                                    alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                                    maxWidth: '85%',
+                                    padding: '12px 16px',
+                                    borderRadius: msg.role === 'user' ? '18px 18px 2px 18px' : '18px 18px 18px 2px',
+                                    background: msg.role === 'user' ? 'var(--accent-sage)' : 'rgba(255,255,255,0.05)',
+                                    color: msg.role === 'user' ? '#fff' : 'var(--text-primary)',
+                                    fontSize: '0.92rem',
+                                    lineHeight: 1.5,
+                                    border: msg.role === 'user' ? 'none' : '1px solid var(--border-subtle)'
+                                }}>
+                                    {msg.content}
+                                </div>
+                            ))}
+                            {isLoading && (
+                                <div style={{ alignSelf: 'flex-start', background: 'rgba(255,255,255,0.05)', padding: '12px 16px', borderRadius: '18px 18px 18px 2px', border: '1px solid var(--border-subtle)' }}>
+                                    <div style={{ display: 'flex', gap: '4px' }}>
+                                        {[0, 1, 2].map(j => (
+                                            <motion.div
+                                                key={j}
+                                                animate={{ y: [0, -4, 0] }}
+                                                transition={{ duration: 0.6, repeat: Infinity, delay: j * 0.1 }}
+                                                style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--text-secondary)' }}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            <div ref={messagesEndRef} />
+                        </div>
+
+                        {/* Input */}
+                        <form onSubmit={handleSend} style={{ padding: '20px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(0,0,0,0.2)' }}>
+                            <div style={{ display: 'flex', gap: '12px' }}>
+                                <input
+                                    type="text"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    placeholder="Ask something..."
+                                    style={{
+                                        flex: 1,
+                                        background: 'rgba(255,255,255,0.05)',
+                                        border: '1px solid var(--border-medium)',
+                                        borderRadius: '12px',
+                                        padding: '10px 16px',
+                                        color: '#fff',
+                                        outline: 'none',
+                                        fontSize: '0.9rem'
+                                    }}
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={!input.trim() || isLoading}
+                                    style={{
+                                        background: 'var(--accent-sage)',
+                                        border: 'none',
+                                        borderRadius: '12px',
+                                        width: '42px',
+                                        height: '42px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        opacity: (!input.trim() || isLoading) ? 0.5 : 1
+                                    }}
+                                >
+                                    <span style={{ color: '#fff', fontSize: '1.2rem' }}>→</span>
+                                </button>
+                            </div>
+                        </form>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* FAB */}
+            <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setIsOpen(!isOpen)}
+                style={{
+                    width: '64px',
+                    height: '64px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, var(--accent-sage), var(--accent-terra))',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.8rem',
+                    boxShadow: '0 8px 32px rgba(122, 158, 126, 0.3)',
+                    color: '#fff',
+                    zIndex: 1001
+                }}
+            >
+                {isOpen ? '✕' : '💬'}
+            </motion.button>
+        </div>
+    );
+}

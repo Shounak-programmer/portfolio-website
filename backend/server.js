@@ -152,7 +152,7 @@ app.post('/api/chat', async (req, res) => {
 
     // System prompt to give the AI context about Shounak
     const systemPrompt = `You are a helpful AI assistant for Shounak Chatterjee's portfolio website. 
-    Shounak is a Full Stack Developer from India. 
+    Shounak is a Full Stack Developer from India. He is a B.Tech CSE student at Adamas University, which is located in Barasat, Kolkata. 
     Skills: React, Next.js, Node.js, Express, SQLite, Tailwind CSS, Framer Motion, python, MongoDB, CSS, Java, C, C++, HTML, Git, GitHub. 
     Projects: Personal Portfolio, Smart Traffic System (IDP). Project details are given in the website "shounakchatterjee.tech". 
     Payments: He takes contract work, payments via UPI or Bank Transfer after scope discussion. Ranges between 2000-50000 INR depending on the project. 

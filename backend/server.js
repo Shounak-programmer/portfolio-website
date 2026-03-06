@@ -142,22 +142,31 @@ app.post('/api/chat', async (req, res) => {
     }
 
     const HUGGINGFACE_TOKEN = process.env.HUGGINGFACE_TOKEN;
-    const MODEL_ID = process.env.HUGGINGFACE_MODEL_ID || "Qwen/Qwen2.5-7B-Instruct";
+    const MODEL_ID = process.env.HUGGINGFACE_MODEL_ID || "Qwen/Qwen2.5-Coder-32B-Instruct"; // More capable coder model
 
     if (!HUGGINGFACE_TOKEN) {
-        return res.json({ reply: "I'm currently in 'offline mode' (HuggingFace token missing). Shounak is a Full Stack Developer specializing in React and Node.js. How can he help you?" });
+        return res.json({ reply: "I'm currently in 'offline mode' (HuggingFace token missing). Shounak is a Full Stack Developer specializing in React, Next.js, and Node.js. How can he help you?" });
     }
 
     const hf = new HfInference(HUGGINGFACE_TOKEN);
 
     // System prompt to give the AI context about Shounak
-    const systemPrompt = `You are a helpful AI assistant for Shounak Chatterjee's portfolio website. 
-    Shounak is a Full Stack Developer from India. He is a B.Tech CSE student at Adamas University, which is located in Barasat, Kolkata. 
-    Skills: React, Next.js, Node.js, Express, SQLite, Tailwind CSS, Framer Motion, python, MongoDB, CSS, Java, C, C++, HTML, Git, GitHub. 
-    Projects: Personal Portfolio, Smart Traffic System (IDP). Project details are given in the website "shounakchatterjee.tech". 
-    Payments: He takes contract work, payments via UPI or Bank Transfer after scope discussion. Ranges between 2000-50000 INR depending on the project. 
-    Tone: Professional, friendly, and concise. 
-    Always stay in character. If you don't know something about Shounak, politely say you only have access to his professional profile.`;
+    const systemPrompt = `You are a helpful and knowledgeable AI assistant for Shounak Chatterjee's portfolio website. 
+    About Shounak: A Full Stack Developer from India, currently a B.Tech CSE student at Adamas University, Kolkata.
+    
+    Technical Skills:
+    - Frontend: React.js, Next.js (App Router), JavaScript (ES6+), Tailwind CSS, Framer Motion (animations), CSS3 (specializing in natural/earthy themes).
+    - Backend: Node.js, Express.js, Python, Java, C, C++.
+    - Database/Infrastructure: SQLite (better-sqlite3), Firebase (Real-time sync), MongoDB, PostgreSQL, Git, GitHub.
+    - Specialized: Web Audio API (spatial audio), Google Maps API integration, Kalman filters for location smoothing.
+
+    Key Projects:
+    1. IDP (Intelligent Dispatch & Pathfinding): A sub-second traffic management system to reduce ambulance delays. It uses real-time Firebase sync, spatial audio radar alerts for drivers, and auto-clearing traffic signals via a navigation app.
+    2. Personal Portfolio: A high-performance personal site built with Next.js, featuring a custom "Natural Design System" with earthy tones and glassmorphism.
+
+    Role: You answer questions about Shounak's work, experience, and fee structure (2,000 to 50,000 INR for contract work).
+    Tone: Professional yet approachable, concise, and enthusiastic about tech. 
+    Crucial: If asked about personal life details not mentioned here, politely decline. Stay in character as his portfolio assistant.`;
 
     try {
         // Map history to the format expected by chatCompletion

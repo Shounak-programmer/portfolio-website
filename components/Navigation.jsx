@@ -56,25 +56,27 @@ export default function Navigation() {
                         height: '72px',
                     }}
                 >
-                    {/* Logo */}
-                    <motion.a
-                        href="#"
-                        whileHover={{ scale: 1.03 }}
-                        style={{
-                            fontFamily: 'var(--font-playfair), serif',
-                            fontSize: '1.5rem',
-                            fontWeight: 700,
-                            textDecoration: 'none',
-                            letterSpacing: '-0.01em',
-                        }}
-                    >
-                        <span className="text-gradient-sage">SC</span>
-                    </motion.a>
+                    {/* Logo - Flex 1 to push links to center */}
+                    <div style={{ flex: '1 1 0%', display: 'flex', justifyContent: 'flex-start' }}>
+                        <motion.a
+                            href="#"
+                            whileHover={{ scale: 1.03 }}
+                            style={{
+                                fontFamily: 'var(--font-playfair), serif',
+                                fontSize: '1.5rem',
+                                fontWeight: 700,
+                                textDecoration: 'none',
+                                letterSpacing: '-0.01em',
+                            }}
+                        >
+                            <span className="text-gradient-sage">SC</span>
+                        </motion.a>
+                    </div>
 
-                    {/* Desktop nav links */}
+                    {/* Desktop nav links - Fixed center section */}
                     <div
                         className="hidden md:flex"
-                        style={{ alignItems: 'center', gap: '40px' }}
+                        style={{ alignItems: 'center', gap: '40px', flex: '0 0 auto' }}
                     >
                         {navItems.map((item, index) => (
                             <motion.a
@@ -99,54 +101,56 @@ export default function Navigation() {
                         ))}
                     </div>
 
-                    {/* CTA */}
-                    <motion.a
-                        href="#contact"
-                        className="hidden md:inline-flex btn-primary"
-                        whileHover={{ scale: 1.04 }}
-                        whileTap={{ scale: 0.96 }}
-                        style={{
-                            textDecoration: 'none',
-                            fontSize: '0.85rem',
-                            padding: '10px 24px',
-                        }}
-                    >
-                        Hire me
-                    </motion.a>
+                    {/* CTA - Flex 1 to push links to center */}
+                    <div style={{ flex: '1 1 0%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '16px' }}>
+                        <motion.a
+                            href="#contact"
+                            className="hidden md:inline-flex btn-primary"
+                            whileHover={{ scale: 1.04 }}
+                            whileTap={{ scale: 0.96 }}
+                            style={{
+                                textDecoration: 'none',
+                                fontSize: '0.85rem',
+                                padding: '10px 24px',
+                            }}
+                        >
+                            Hire me
+                        </motion.a>
 
-                    {/* Mobile menu button */}
-                    <button
-                        className="md:hidden"
-                        onClick={() => setMobileOpen(!mobileOpen)}
-                        style={{
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '8px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '5px',
-                        }}
-                    >
-                        <span style={{
-                            display: 'block', width: '22px', height: '1.5px',
-                            background: mobileOpen ? 'var(--accent-sage-light)' : 'var(--text-primary)',
-                            transition: 'all 0.3s ease',
-                            transform: mobileOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
-                        }} />
-                        <span style={{
-                            display: 'block', width: '22px', height: '1.5px',
-                            background: 'var(--text-primary)',
-                            transition: 'all 0.3s ease',
-                            opacity: mobileOpen ? 0 : 1,
-                        }} />
-                        <span style={{
-                            display: 'block', width: '22px', height: '1.5px',
-                            background: mobileOpen ? 'var(--accent-sage-light)' : 'var(--text-primary)',
-                            transition: 'all 0.3s ease',
-                            transform: mobileOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
-                        }} />
-                    </button>
+                        {/* Mobile menu button */}
+                        <button
+                            className="md:hidden"
+                            onClick={() => setMobileOpen(!mobileOpen)}
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                padding: '8px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '5px',
+                            }}
+                        >
+                            <span style={{
+                                display: 'block', width: '22px', height: '1.5px',
+                                background: mobileOpen ? 'var(--accent-sage-light)' : 'var(--text-primary)',
+                                transition: 'all 0.3s ease',
+                                transform: mobileOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
+                            }} />
+                            <span style={{
+                                display: 'block', width: '22px', height: '1.5px',
+                                background: 'var(--text-primary)',
+                                transition: 'all 0.3s ease',
+                                opacity: mobileOpen ? 0 : 1,
+                            }} />
+                            <span style={{
+                                display: 'block', width: '22px', height: '1.5px',
+                                background: mobileOpen ? 'var(--accent-sage-light)' : 'var(--text-primary)',
+                                transition: 'all 0.3s ease',
+                                transform: mobileOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
+                            }} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Mobile dropdown */}
@@ -159,6 +163,7 @@ export default function Navigation() {
                             padding: '16px 0',
                             display: 'flex',
                             flexDirection: 'column',
+                            alignItems: 'center',
                             gap: '4px',
                         }}
                     >

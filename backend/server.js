@@ -131,6 +131,8 @@ app.patch('/api/admin/contacts/:id/read', requireAdminToken, (req, res) => {
     res.json({ success: true });
 });
 
+const { HfInference } = require('@huggingface/inference');
+
 // ─── AI Chatbot: Hugging Face Proxy ──────────────────────────────────────────
 app.post('/api/chat', async (req, res) => {
     const { message, history } = req.body;
@@ -140,79 +142,58 @@ app.post('/api/chat', async (req, res) => {
     }
 
     const HUGGINGFACE_TOKEN = process.env.HUGGINGFACE_TOKEN;
-    const MODEL_ID = process.env.HUGGINGFACE_MODEL_ID || "mistralai/Mistral-7B-Instruct-v0.2";
+    const MODEL_ID = process.env.HUGGINGFACE_MODEL_ID || "Qwen/Qwen2.5-7B-Instruct";
 
     if (!HUGGINGFACE_TOKEN) {
         return res.json({ reply: "I'm currently in 'offline mode' (HuggingFace token missing). Shounak is a Full Stack Developer specializing in React and Node.js. How can he help you?" });
     }
 
+    const hf = new HfInference(HUGGINGFACE_TOKEN);
+
     // System prompt to give the AI context about Shounak
-    const systemPrompt = `You are an AI assistant for Shounak Chatterjee's portfolio website. 
-    Shounak is a Full Stack Developer based in India.
-    Skills: React, Next.js, Node.js, Express, SQLite, Tailwind CSS, Framer Motion.
-    Projects: 1. Cyberpunk Portfolio, 2. Smart Traffic System (IDP).
-    Tone: Helpful, professional, and slightly friendly.
-    If asked about payments, mention that he takes projects on a contract basis and payments are usually via UPI or bank transfer after discussing the project scope.
-    Keep answers concise. Always stay in character as Shounak's helpful assistant.`;
+    const systemPrompt = `You are a helpful AI assistant for Shounak Chatterjee's portfolio website. 
+    Shounak is a Full Stack Developer from India. 
+    Skills: React, Next.js, Node.js, Express, SQLite, Tailwind CSS, Framer Motion. 
+    Projects: Cyberpunk Portfolio, Smart Traffic System (IDP). 
+    Payments: He takes contract work, payments via UPI or Bank Transfer after scope discussion. 
+    Tone: Professional, friendly, and concise. 
+    Always stay in character. If you don't know something about Shounak, politely say you only have access to his professional profile.`;
 
     try {
-        // Construct simple prompt format for Mistral-like models
-        // Using Inference API (Serverless)
-        const response = await fetch(
-            `https://api-inference.huggingface.co/models/${MODEL_ID}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${HUGGINGFACE_TOKEN}`,
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify({
-                    inputs: `<s>[INST] ${systemPrompt} \n\n User history: ${JSON.stringify(history.slice(-3))} \n\n Current Question: ${message} [/INST]`,
-                    parameters: {
-                        max_new_tokens: 300,
-                        temperature: 0.7,
-                        return_full_text: false
-                    },
-                    options: {
-                        wait_for_model: true
-                    }
-                }),
-            }
-        );
+        // Map history to the format expected by chatCompletion
+        const messages = [
+            { role: "system", content: systemPrompt },
+            ...history.slice(-4).map(m => ({
+                role: m.role === 'user' ? 'user' : 'assistant',
+                content: m.content
+            })),
+            { role: "user", content: message }
+        ];
 
-        const result = await response.json();
+        const response = await hf.chatCompletion({
+            model: MODEL_ID,
+            messages: messages,
+            max_tokens: 400,
+            temperature: 0.7,
+        });
 
-        // Handle "Model is loading" case
-        if (result.error && result.error.includes("loading")) {
-            return res.json({
-                reply: `My "brain" (the AI model) is currently waking up on Hugging Face. It usually takes 20-30 seconds. Please try asking again in a moment!`
-            });
-        }
-
-        // Handle other API errors
-        if (result.error) {
-            console.error('HF API Error:', result.error);
-            return res.json({ reply: "I'm having a small technical glitch with my AI provider. Please try again in 10 seconds!" });
-        }
-
-        // Extract reply based on different possible response structures
-        let rawReply = "";
-        if (Array.isArray(result)) {
-            rawReply = result[0]?.generated_text || result[0]?.text || "";
-        } else {
-            rawReply = result.generated_text || result.text || "";
-        }
-
-        // Clean up the reply
-        const reply = rawReply.replace(/\[\/INST\]/g, "").trim();
+        const reply = response.choices[0].message.content;
 
         if (!reply) {
-            return res.json({ reply: "I'm here, but I didn't catch that. Could you ask me again about Shounak?" });
+            return res.json({ reply: "I'm here, but my processing felt a bit empty. Could you ask me again?" });
         }
 
         res.json({ reply });
     } catch (err) {
-        console.error('Hugging Face API error:', err);
+        console.error('Hugging Face SDK error:', err);
+
+        // Handle "Model is loading" or high traffic cases gracefully
+        if (err.message && (err.message.includes("loading") || err.message.includes("503") || err.message.includes("504"))) {
+            return res.json({
+                reply: `My AI "brain" is currently waking up or under high load. It usually takes 20-30 seconds. Please try asking again in a moment!`
+            });
+        }
+
         res.status(500).json({ error: 'AI failed to respond.' });
     }
 });

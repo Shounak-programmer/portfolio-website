@@ -114,7 +114,27 @@ const socialLinks = [
 
 ---
 
-## 6. Navigation Links
+## 6. Backend & Admin Dashboard
+
+### Admin Credentials
+**File**: `backend/.env` (Local) / Hosting Dashboard (Production)
+
+Set your private login credentials:
+```env
+ADMIN_USERNAME=your_username
+ADMIN_PASSWORD=your_password
+ADMIN_TOKEN=a_long_random_secret_string
+ALLOWED_ORIGIN=https://shounakchatterjee.tech
+```
+
+### Database Location
+**File**: `backend/server.js`
+
+By default, the database is a local file called `contacts.db`. You can change the location via the `DB_PATH` environment variable.
+
+---
+
+## 7. Navigation Links
 
 **File**: `components/Navigation.jsx` — find the `navItems` array:
 
@@ -129,7 +149,7 @@ const navItems = [
 
 ---
 
-## 7. SEO & Metadata
+## 8. SEO & Metadata
 
 **File**: `app/layout.js`
 
@@ -149,7 +169,7 @@ export const metadata = {
 
 ---
 
-## 8. Colours & Design Tokens
+## 9. Colours & Design Tokens
 
 All CSS variables live in `app/globals.css` under `:root`. Change these to retheme the entire site:
 
@@ -169,7 +189,7 @@ All CSS variables live in `app/globals.css` under `:root`. Change these to rethe
 
 ---
 
-## 9. Fonts
+## 10. Fonts
 
 Fonts are loaded in `app/layout.js` via `next/font/google`. To change them:
 

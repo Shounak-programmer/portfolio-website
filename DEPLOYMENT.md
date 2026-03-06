@@ -6,15 +6,15 @@ The portfolio is deployed on **Vercel** and served at **[shounakchatterjee.tech]
 
 ## Current Setup
 
-| Item | Value |
-|---|---|
-| Hosting | Vercel |
-| Domain | shounakchatterjee.tech |
-| GitHub Repo | [Shounak-programmer/portfolio-website](https://github.com/Shounak-programmer/portfolio-website) |
-| Branch | `main` |
-| Framework preset | Next.js (auto-detected) |
+| Item | Frontend | Backend |
+|---|---|---|
+| Hosting | Vercel | Railway |
+| Domain | shounakchatterjee.tech | *(Internal URL proxied)* |
+| Repo | [GitHub](https://github.com/Shounak-programmer/portfolio-website) | Same |
+| Branch | `main` | `main` |
+| Preset | Next.js | Nixpacks |
 
-Vercel is connected to the GitHub repo. **Every push to `main` triggers an automatic deployment.**
+**The backend is proxied through the frontend at `/admin` and `/api`.** Every push to `main` triggers a dual deployment on both Vercel and Railway.
 
 ---
 
@@ -50,11 +50,29 @@ Then visit [http://localhost:3000](http://localhost:3000) to verify everything l
 
 ## Environment Variables
 
-If you ever add API keys or secrets (e.g. for a contact form backend), add them in:
+### Vercel (Frontend)
+Add this to point the frontend to the backend:
+- `NEXT_PUBLIC_BACKEND_URL`: `https://your-backend.up.railway.app`
 
-> Vercel Dashboard → Project → Settings → Environment Variables
+### Railway (Backend)
+Required for security and persistence:
+- `ADMIN_USERNAME`: Your login username
+- `ADMIN_PASSWORD`: Your login password
+- `ADMIN_TOKEN`: A secret token for session security
+- `ALLOWED_ORIGIN`: `https://shounakchatterjee.tech`
+- `DB_PATH`: `/data/contacts.db` (Requires a **Persistent Volume** mounted at `/data`)
 
-Never commit secrets to the repo.
+Never commit secrets to the repo. Use `.env.local` for local development.
+
+---
+
+## Proxies & Rewrites
+
+The frontend `next.config.js` is configured to proxy requests:
+- `shounakchatterjee.tech/admin` → `[Backend URL]/admin`
+- `shounakchatterjee.tech/api/*` → `[Backend URL]/api/*`
+
+This keeps the admin dashboard on your main domain and avoids CORS issues.
 
 ---
 

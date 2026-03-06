@@ -12,7 +12,8 @@ A modern, elegant portfolio website built with **Next.js**, **Tailwind CSS**, an
 - **Hero Section** — Animated name reveal with an infinite tech-stack ticker
 - **Bento Grid Skills** — Interactive cards showcasing areas of expertise with hover animations
 - **Projects Showcase** — Featured projects with tech-stack tags and smooth scroll animations
-- **Contact Section** — Interactive contact form with social links
+- **Contact Section** — Real-time contact form integrated with a custom backend
+- **Admin Dashboard** — Private dashboard at `/admin` to view and manage contact submissions
 - **Fully Responsive** — Optimised for all screen sizes and devices
 - **Smooth Animations** — Powered by Framer Motion for buttery-smooth transitions
 - **SEO Optimised** — Proper meta tags and semantic HTML structure
@@ -48,11 +49,13 @@ A modern, elegant portfolio website built with **Next.js**, **Tailwind CSS**, an
 | Category | Technology |
 |---|---|
 | Framework | Next.js 16 (App Router) |
+| Backend | Node.js + Express |
+| Database | SQLite (Persistent) |
 | Language | JavaScript (React JSX) |
 | Styling | Tailwind CSS v4 + Vanilla CSS Variables |
 | Animations | Framer Motion 12 |
 | Fonts | Playfair Display, Inter (Google Fonts) |
-| Deployment | Vercel |
+| Deployment | Vercel (Frontend) + Railway (Backend) |
 
 ---
 
@@ -95,12 +98,16 @@ portfolio-website/
 │   ├── globals.css          # Global styles & CSS design tokens
 │   ├── layout.js            # Root layout with metadata & fonts
 │   └── page.js              # Main page — assembles all sections
+├── backend/
+│   ├── admin/               # Admin dashboard (HTML/JS)
+│   ├── server.js            # Express API server
+│   └── contacts.db          # SQLite database (auto-created)
 ├── components/
 │   ├── Navigation.jsx        # Sticky navigation bar
 │   ├── Hero.jsx              # Hero section with name & tech ticker
 │   ├── BentoGrid.jsx         # Skills showcase in bento grid layout
 │   ├── Projects.jsx          # Featured projects section
-│   ├── Contact.jsx           # Contact form and social links
+│   ├── Contact.jsx           # Contact form (submits to backend)
 │   └── Footer.jsx            # Footer with quick links
 └── public/                   # Static assets
 ```

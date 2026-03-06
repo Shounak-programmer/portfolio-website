@@ -168,21 +168,46 @@ app.post('/api/chat', async (req, res) => {
                 method: "POST",
                 body: JSON.stringify({
                     inputs: `<s>[INST] ${systemPrompt} \n\n User history: ${JSON.stringify(history.slice(-3))} \n\n Current Question: ${message} [/INST]`,
-                    parameters: { max_new_tokens: 250, temperature: 0.7 }
+                    parameters: {
+                        max_new_tokens: 300,
+                        temperature: 0.7,
+                        return_full_text: false
+                    },
+                    options: {
+                        wait_for_model: true
+                    }
                 }),
             }
         );
 
         const result = await response.json();
 
-        // Handle different Hugging Face response formats
-        let reply = "";
-        if (Array.isArray(result) && result[0]?.generated_text) {
-            reply = result[0].generated_text.split('[/INST]').pop().trim();
-        } else if (result.generated_text) {
-            reply = result.generated_text.split('[/INST]').pop().trim();
+        // Handle "Model is loading" case
+        if (result.error && result.error.includes("loading")) {
+            return res.json({
+                reply: `My "brain" (the AI model) is currently waking up on Hugging Face. It usually takes 20-30 seconds. Please try asking again in a moment!`
+            });
+        }
+
+        // Handle other API errors
+        if (result.error) {
+            console.error('HF API Error:', result.error);
+            return res.json({ reply: "I'm having a small technical glitch with my AI provider. Please try again in 10 seconds!" });
+        }
+
+        // Extract reply based on different possible response structures
+        let rawReply = "";
+        if (Array.isArray(result)) {
+            rawReply = result[0]?.generated_text || result[0]?.text || "";
         } else {
-            reply = "I'm processing that... Shounak says hello! (API response format error)";
+            rawReply = result.generated_text || result.text || "";
+        }
+
+        // Clean up the reply
+        const reply = rawReply.replace(/\[\/INST\]/g, "").trim();
+
+        if (!reply) {
+            return res.json({ reply: "I'm here, but I didn't catch that. Could you ask me again about Shounak?" });
         }
 
         res.json({ reply });

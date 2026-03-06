@@ -32,6 +32,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# backend
+/backend/node_modules
+/backend/contacts.db
+/backend/.env
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

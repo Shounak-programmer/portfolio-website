@@ -7,17 +7,36 @@ export default function Contact() {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
     const [hoveredSocial, setHoveredSocial] = useState(null);
 
-    const handleSubmit = (e) => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        setTimeout(() => {
+        setSubmitError(null);
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/api/contact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (res.ok) {
+                setSubmitted(true);
+                setFormData({ name: '', email: '', message: '' });
+                setTimeout(() => setSubmitted(false), 5000);
+            } else {
+                const data = await res.json().catch(() => ({}));
+                setSubmitError(data.error || 'Something went wrong. Please try again.');
+            }
+        } catch {
+            setSubmitError('Could not reach the server. Please try again later.');
+        } finally {
             setIsSubmitting(false);
-            setSubmitted(true);
-            setFormData({ name: '', email: '', message: '' });
-            setTimeout(() => setSubmitted(false), 4000);
-        }, 1200);
+        }
     };
 
     const socialLinks = [
@@ -228,6 +247,12 @@ export default function Contact() {
                                     >
                                         {isSubmitting ? 'Sending...' : 'Send message'}
                                     </motion.button>
+
+                                    {submitError && (
+                                        <p style={{ color: '#c0665a', fontSize: '0.85rem', marginTop: '4px', textAlign: 'center' }}>
+                                            ⚠ {submitError}
+                                        </p>
+                                    )}
                                 </form>
                             )}
                         </div>

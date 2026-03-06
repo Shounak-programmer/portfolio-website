@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: portfolio-backend
+    env: node
+    buildCommand: "cd backend && npm install"
+    startCommand: "cd backend && npm start"
+    plan: starter # Change to 'free' if you don't use disk, but SQLite needs a disk!
+    disk:
+      name: sqlite-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: DB_PATH
+        value: /data/contacts.db
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_TOKEN
+        sync: false
+      - key: ALLOWED_ORIGIN
+        value: https://shounakchatterjee.tech

@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
 
 export default function Chatbot() {
+    const [mounted, setMounted] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         { role: 'assistant', content: "Hello! I'm Shounak's AI assistant. How can I help you today?" }
@@ -12,13 +14,17 @@ export default function Chatbot() {
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
 
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
     useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
+        if (isOpen) scrollToBottom();
+    }, [messages, isOpen]);
 
     const handleSend = async (e) => {
         e.preventDefault();
@@ -47,34 +53,36 @@ export default function Chatbot() {
         }
     };
 
-    return (
-        <div style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 1000 }}>
+    if (!mounted) return null;
+
+    return createPortal(
+        <div style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 1000, pointerEvents: 'auto' }}>
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         style={{
                             position: 'absolute',
                             bottom: '80px',
                             right: 0,
-                            width: '380px',
-                            height: '520px',
+                            width: 'min(380px, 90vw)',
+                            height: 'min(520px, 70vh)',
                             background: 'var(--bg-card)',
-                            backdropFilter: 'blur(20px)',
-                            border: '1px solid var(--border-subtle)',
+                            backdropFilter: 'blur(24px)',
+                            border: '1px solid var(--border-medium)',
                             borderRadius: '24px',
                             display: 'flex',
                             flexDirection: 'column',
                             overflow: 'hidden',
-                            boxShadow: '0 24px 48px rgba(0,0,0,0.4)',
+                            boxShadow: '0 24px 60px rgba(0,0,0,0.5)',
                         }}
                     >
                         {/* Header */}
                         <div style={{
                             padding: '20px 24px',
-                            background: 'linear-gradient(135deg, rgba(122, 158, 126, 0.15), rgba(193, 122, 90, 0.1))',
+                            background: 'linear-gradient(135deg, rgba(122, 158, 126, 0.1), rgba(193, 122, 90, 0.05))',
                             borderBottom: '1px solid var(--border-subtle)',
                             display: 'flex',
                             alignItems: 'center',
@@ -82,13 +90,13 @@ export default function Chatbot() {
                         }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <div style={{
-                                    width: '10px',
-                                    height: '10px',
+                                    width: '8px',
+                                    height: '8px',
                                     borderRadius: '50%',
-                                    background: 'var(--accent-sage-light)',
+                                    background: 'var(--accent-sage)',
                                     boxShadow: '0 0 10px var(--accent-sage)'
                                 }} />
-                                <span style={{ fontFamily: 'var(--font-playfair), serif', fontWeight: 700, fontSize: '1.1rem' }}>AI Assistant</span>
+                                <span style={{ fontFamily: 'var(--font-playfair), serif', fontWeight: 700, fontSize: '1rem' }}>AI Assistant</span>
                             </div>
                             <button
                                 onClick={() => setIsOpen(false)}
@@ -99,7 +107,7 @@ export default function Chatbot() {
                         </div>
 
                         {/* Messages */}
-                        <div style={{ flex: 1, overflowY: 'auto', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        <div style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                             {messages.map((msg, i) => (
                                 <div key={i} style={{
                                     alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
@@ -108,7 +116,7 @@ export default function Chatbot() {
                                     borderRadius: msg.role === 'user' ? '18px 18px 2px 18px' : '18px 18px 18px 2px',
                                     background: msg.role === 'user' ? 'var(--accent-sage)' : 'rgba(255,255,255,0.05)',
                                     color: msg.role === 'user' ? '#fff' : 'var(--text-primary)',
-                                    fontSize: '0.92rem',
+                                    fontSize: '0.9rem',
                                     lineHeight: 1.5,
                                     border: msg.role === 'user' ? 'none' : '1px solid var(--border-subtle)'
                                 }}>
@@ -133,22 +141,22 @@ export default function Chatbot() {
                         </div>
 
                         {/* Input */}
-                        <form onSubmit={handleSend} style={{ padding: '20px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(0,0,0,0.2)' }}>
-                            <div style={{ display: 'flex', gap: '12px' }}>
+                        <form onSubmit={handleSend} style={{ padding: '16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(0,0,0,0.1)' }}>
+                            <div style={{ display: 'flex', gap: '10px' }}>
                                 <input
                                     type="text"
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
-                                    placeholder="Ask something..."
+                                    placeholder="Type a message..."
                                     style={{
                                         flex: 1,
-                                        background: 'rgba(255,255,255,0.05)',
+                                        background: 'rgba(0,0,0,0.2)',
                                         border: '1px solid var(--border-medium)',
                                         borderRadius: '12px',
                                         padding: '10px 16px',
                                         color: '#fff',
                                         outline: 'none',
-                                        fontSize: '0.9rem'
+                                        fontSize: '0.85rem'
                                     }}
                                 />
                                 <button
@@ -158,8 +166,8 @@ export default function Chatbot() {
                                         background: 'var(--accent-sage)',
                                         border: 'none',
                                         borderRadius: '12px',
-                                        width: '42px',
-                                        height: '42px',
+                                        width: '40px',
+                                        height: '40px',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -177,27 +185,28 @@ export default function Chatbot() {
 
             {/* FAB */}
             <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
                 style={{
-                    width: '64px',
-                    height: '64px',
+                    width: '60px',
+                    height: '60px',
                     borderRadius: '50%',
-                    background: 'linear-gradient(135deg, var(--accent-sage), var(--accent-terra))',
+                    background: 'linear-gradient(135deg, var(--accent-sage), var(--accent-terracotta))',
                     border: 'none',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.8rem',
-                    boxShadow: '0 8px 32px rgba(122, 158, 126, 0.3)',
+                    fontSize: '1.6rem',
+                    boxShadow: '0 8px 32px rgba(122, 158, 126, 0.4)',
                     color: '#fff',
                     zIndex: 1001
                 }}
             >
                 {isOpen ? '✕' : '💬'}
             </motion.button>
-        </div>
+        </div>,
+        document.body
     );
 }

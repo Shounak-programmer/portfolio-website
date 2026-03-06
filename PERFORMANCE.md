@@ -16,6 +16,10 @@ Notes on the performance optimisations already in place, and tips for keeping Li
 - Framer Motion is imported selectively — only the components in use
 - `optimizePackageImports` is enabled in `next.config.js` for Framer Motion
 
+### Backend & API
+- **Next.js Rewrites** are used to proxy `/admin` and `/api` to the backend. This is more performant than client-side redirects and avoids the latency of Cross-Origin (CORS) preflight requests.
+- **SQLite Database** — used for contact messages for fast, local-to-process data retrieval.
+
 ### Animations
 - All Framer Motion transforms use GPU-composited properties (`transform`, `opacity`) — no layout-triggering properties
 - `viewport={{ once: true }}` ensures scroll animations only fire once, not on every scroll pass

@@ -16,9 +16,21 @@ const nextConfig = {
     // Optimize production builds
     poweredByHeader: false,
 
-    // Enable experimental features for better performance
     experimental: {
         optimizePackageImports: ['framer-motion'],
+    },
+    async rewrites() {
+        const backendUrl = 'https://portfolio-backend-production-2e39.up.railway.app';
+        return [
+            {
+                source: '/admin',
+                destination: `${backendUrl}/admin`,
+            },
+            {
+                source: '/api/:path*',
+                destination: `${backendUrl}/api/:path*`,
+            },
+        ];
     },
 };
 

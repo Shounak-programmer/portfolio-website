@@ -10,15 +10,13 @@ export default function Contact() {
     const [submitError, setSubmitError] = useState(null);
     const [hoveredSocial, setHoveredSocial] = useState(null);
 
-    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         setSubmitError(null);
 
         try {
-            const res = await fetch(`${BACKEND_URL}/api/contact`, {
+            const res = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),

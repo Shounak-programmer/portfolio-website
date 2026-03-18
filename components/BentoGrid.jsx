@@ -8,7 +8,7 @@ const BentoCard = ({ title, description, icon, className = '', accentColor, acce
 
     return (
         <motion.div
-            className={`glassmorphism relative group rounded-3xl p-8 cursor-default ${className}`}
+            className={`glassmorphism relative group rounded-3xl p-10 cursor-default ${className}`}
             style={{
                 border: `1px solid var(--border-subtle)`,
                 transition: 'all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1)',

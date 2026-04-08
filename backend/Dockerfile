@@ -1,9 +1,10 @@
 # ── Build stage ────────────────────────────────────────────────
-FROM node:20-slim AS builder
+FROM node:20 AS builder
 
 WORKDIR /app
 
-# Install dependencies (better-sqlite3 needs build tools)
+# Copy package files and install dependencies
+# (full node:20 image has build tools needed for better-sqlite3)
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 

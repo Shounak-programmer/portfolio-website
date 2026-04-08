@@ -20,7 +20,7 @@ const nextConfig = {
         optimizePackageImports: ['framer-motion'],
     },
     async rewrites() {
-        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://shounak-programmer-portfolio-backend.hf.space';
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://user1shounak-portfolio-backend.hf.space';
         return [
             {
                 source: '/admin',

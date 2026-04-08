@@ -1,6 +1,6 @@
 # Deployment Guide
 
-The portfolio is deployed on **Vercel** (frontend) and **Fly.io** (backend), served at **[shounakchatterjee.tech](https://shounakchatterjee.tech)**.
+The portfolio is deployed on **Vercel** (frontend) and **HuggingFace Spaces** (backend), served at **[shounakchatterjee.tech](https://shounakchatterjee.tech)**.
 
 ---
 
@@ -8,26 +8,21 @@ The portfolio is deployed on **Vercel** (frontend) and **Fly.io** (backend), ser
 
 | Item | Frontend | Backend |
 |---|---|---|
-| Hosting | Vercel | Fly.io |
-| Domain | shounakchatterjee.tech | shounak-portfolio-backend.fly.dev |
-| Repo | [GitHub](https://github.com/Shounak-programmer/portfolio-website) | Same |
+| Hosting | Vercel | HuggingFace Spaces (Docker) |
+| Domain | shounakchatterjee.tech | shounak-programmer-portfolio-backend.hf.space |
+| Repo | [GitHub](https://github.com/Shounak-programmer/portfolio-website) | [HF Space](https://huggingface.co/spaces/Shounak-programmer/portfolio-backend) |
 | Branch | `main` | `main` |
-| Preset | Next.js | Dockerfile |
+| Preset | Next.js | Docker SDK |
 
-**The backend is proxied through the frontend at `/admin` and `/api`.** Every push to `main` triggers a Vercel deployment automatically. Fly.io must be deployed manually (or via CI).
+**The backend is proxied through the frontend at `/admin` and `/api`.** Every push to `main` triggers a Vercel deployment automatically. The HuggingFace Space is deployed separately.
 
 ---
 
 ## Deploying Frontend Changes (Vercel — Automatic)
 
 ```bash
-# Stage all changes
 git add -A
-
-# Commit with a descriptive message
 git commit -m "Your change description"
-
-# Push — Vercel picks this up automatically
 git push
 ```
 
@@ -35,75 +30,65 @@ Vercel will build and deploy in **~2–3 minutes**. Monitor progress in the [Ver
 
 ---
 
-## Deploying Backend Changes (Fly.io — Manual)
+## Deploying Backend Changes (HuggingFace Spaces)
 
 ### First-Time Setup
 
-1. **Install the Fly CLI:**
-   ```bash
-   # Windows (PowerShell)
-   pwsh -Command "iwr https://fly.io/install.ps1 -useb | iex"
+1. **Go to [huggingface.co/new-space](https://huggingface.co/new-space)**
 
-   # macOS / Linux
-   curl -L https://fly.io/install.sh | sh
+2. **Create the Space:**
+   - **Space name:** `portfolio-backend`
+   - **SDK:** `Docker`
+   - **Visibility:** `Public` (required for free tier)
+   - Click **Create Space**
+
+3. **Clone the Space repo locally:**
+   ```bash
+   git clone https://huggingface.co/spaces/YOUR_USERNAME/portfolio-backend
+   cd portfolio-backend
    ```
 
-2. **Sign up / Log in:**
+4. **Copy backend files into the Space repo:**
    ```bash
-   fly auth signup   # or: fly auth login
+   # From your portfolio-website directory:
+   cp backend/Dockerfile backend/README.md backend/.dockerignore backend/package.json backend/package-lock.json backend/server.js portfolio-backend/
+   cp -r backend/admin portfolio-backend/admin
    ```
 
-3. **Launch the app (from the backend folder):**
-   ```bash
-   cd backend
-   fly launch --no-deploy
-   ```
-   When prompted, confirm the app name as `shounak-portfolio-backend` and region as `sin` (Singapore).
+5. **Set secrets in HuggingFace Space Settings:**
+   Go to your Space → **Settings** → **Variables and secrets** → **New secret**:
+   - `ADMIN_USERNAME` → your admin username
+   - `ADMIN_PASSWORD` → your admin password
+   - `ADMIN_TOKEN` → your secret token
+   - `HUGGINGFACE_TOKEN` → your HF API token
+   - `ALLOWED_ORIGIN` → `https://shounakchatterjee.tech`
 
-4. **Create a persistent volume for SQLite:**
-   ```bash
-   fly volumes create sqlite_data --size 1 --region sin
-   ```
+6. **Enable Persistent Storage:**
+   Go to your Space → **Settings** → **Persistent Storage** → Enable (**Small / Free** tier)
 
-5. **Set your secrets (environment variables):**
+7. **Push to deploy:**
    ```bash
-   fly secrets set \
-     ADMIN_USERNAME=your_username \
-     ADMIN_PASSWORD=your_password \
-     ADMIN_TOKEN=your_secret_token \
-     HUGGINGFACE_TOKEN=your_hf_token
-   ```
-
-6. **Deploy:**
-   ```bash
-   fly deploy
+   cd portfolio-backend
+   git add -A
+   git commit -m "Initial backend deployment"
+   git push
    ```
 
 ### Subsequent Deploys
 
 ```bash
-cd backend
-fly deploy
-```
-
-That's it. Fly.io builds the Docker image and deploys it.
-
-### Useful Fly.io Commands
-
-```bash
-fly status                # Check app status
-fly logs                  # Stream live logs
-fly ssh console           # SSH into the running machine
-fly secrets list          # List configured secrets
-fly volumes list          # List volumes
-fly open                  # Open the app in your browser
+cd portfolio-backend
+# Copy updated files from your main repo
+cp ../portfolio-website/backend/server.js .
+# ... copy any changed files
+git add -A
+git commit -m "Update description"
+git push
 ```
 
 ---
 
 ## Building Locally (Production Test)
-
-Before pushing a large change, test the production build locally:
 
 ```bash
 npm run build
@@ -118,17 +103,17 @@ Then visit [http://localhost:3000](http://localhost:3000) to verify everything l
 
 ### Vercel (Frontend)
 Add this in the Vercel Dashboard → Settings → Environment Variables:
-- `NEXT_PUBLIC_BACKEND_URL`: `https://shounak-portfolio-backend.fly.dev`
+- `NEXT_PUBLIC_BACKEND_URL`: `https://YOUR_USERNAME-portfolio-backend.hf.space`
 
-### Fly.io (Backend)
-These are set via `fly secrets set`:
+### HuggingFace Space (Backend)
+Set these as **Secrets** in Space Settings:
 - `ADMIN_USERNAME`: Your login username
 - `ADMIN_PASSWORD`: Your login password
 - `ADMIN_TOKEN`: A secret token for session security
 - `HUGGINGFACE_TOKEN`: HuggingFace API token for the AI chatbot
-- `ALLOWED_ORIGIN`: `https://shounakchatterjee.tech` *(set in fly.toml)*
-- `DB_PATH`: `/data/contacts.db` *(set in fly.toml, persisted on a Fly Volume)*
-- `PORT`: `8080` *(set in fly.toml)*
+- `ALLOWED_ORIGIN`: `https://shounakchatterjee.tech`
+
+These are automatically injected as environment variables. `PORT` and `DB_PATH` are set in the Dockerfile.
 
 Never commit secrets to the repo. Use `.env.local` for local development.
 
@@ -146,7 +131,7 @@ This keeps the admin dashboard on your main domain and avoids CORS issues.
 
 ## Custom Domain
 
-The domain `shounakchatterjee.tech` is already connected to Vercel. If you ever need to reconnect it or add a subdomain:
+The domain `shounakchatterjee.tech` is already connected to Vercel. If you ever need to reconnect it:
 
 1. Go to **Vercel Dashboard → Project → Settings → Domains**
 2. Add the domain and follow the DNS instructions
@@ -158,8 +143,6 @@ The domain `shounakchatterjee.tech` is already connected to Vercel. If you ever 
 | A | `@` | `76.76.21.21` |
 | CNAME | `www` | `cname.vercel-dns.com` |
 
-DNS changes can take up to 60 minutes to propagate.
-
 ---
 
 ## Reverting a Frontend Deployment
@@ -169,52 +152,34 @@ In the Vercel Dashboard:
 2. Find the previous working deployment
 3. Click **...** → **Promote to Production**
 
-## Reverting a Backend Deployment
-
-```bash
-# List recent Fly.io deployments
-fly releases
-
-# Roll back to a previous release
-fly deploy --image <previous-image-ref>
-```
-
 ---
 
 ## Troubleshooting
 
+### Backend not responding?
+- Check if the Space is running at `https://huggingface.co/spaces/YOUR_USERNAME/portfolio-backend`
+- The Space may have gone to sleep — first request after sleep takes ~30s to wake up
+- Check the **Logs** tab in the Space for errors
+- Verify secrets are set correctly in Space Settings
+
 ### Frontend build failed?
 - Check the Vercel build logs for errors
 - Run `npm run build` locally to reproduce the error
-- Ensure all imports use the correct file paths and extensions (`.jsx`, `.js`)
-
-### Backend not responding?
-- Check backend status: `fly status`
-- View live logs: `fly logs`
-- SSH into the machine: `fly ssh console`
-- Verify secrets are set: `fly secrets list`
 
 ### Domain not loading?
 - Check DNS propagation at [dnschecker.org](https://dnschecker.org)
 - Try an incognito window to bypass cache
-- Verify the domain is listed as active in Vercel → Domains
 
 ### Styles broken after deploy?
 - Clear the Vercel cache: go to Deployments → Redeploy (without cache)
-- Check that `globals.css` is imported in `app/layout.js`
-
-### SQLite database lost?
-- Ensure the Fly Volume is mounted: `fly volumes list`
-- Check `DB_PATH` is set to `/data/contacts.db`
-- If the volume was deleted, create a new one: `fly volumes create sqlite_data --size 1 --region sin`
 
 ---
 
 ## Useful Links
 
 - [Vercel Dashboard](https://vercel.com/dashboard)
-- [Fly.io Dashboard](https://fly.io/dashboard)
-- [Fly.io Docs](https://fly.io/docs/)
+- [HuggingFace Spaces](https://huggingface.co/spaces)
+- [HuggingFace Docs — Docker Spaces](https://huggingface.co/docs/hub/spaces-sdks-docker)
 - [Vercel Docs](https://vercel.com/docs)
 - [Next.js Docs](https://nextjs.org/docs)
 - [GitHub Repo](https://github.com/Shounak-programmer/portfolio-website)

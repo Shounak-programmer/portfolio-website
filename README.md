@@ -55,7 +55,7 @@ A modern, elegant portfolio website built with **Next.js**, **Tailwind CSS**, an
 | Styling | Tailwind CSS v4 + Vanilla CSS Variables |
 | Animations | Framer Motion 12 |
 | Fonts | Playfair Display, Inter (Google Fonts) |
-| Deployment | Vercel (Frontend) + Railway (Backend) |
+| Deployment | Vercel (Frontend) + Fly.io (Backend) |
 
 ---
 

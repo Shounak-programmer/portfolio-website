@@ -20,7 +20,7 @@ const nextConfig = {
         optimizePackageImports: ['framer-motion'],
     },
     async rewrites() {
-        const backendUrl = 'https://portfolio-backend-production-2e39.up.railway.app';
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://shounak-portfolio-backend.fly.dev';
         return [
             {
                 source: '/admin',

@@ -27,7 +27,7 @@ export default function Projects() {
         accent: '#4a90e2',
         accentGradient: 'linear-gradient(135deg, #4a90e2, #3a72b2)',
         emoji: '🎓',
-        link: 'https://github.com/Shounak-programmer/ClassBud',
+        link: null,
         ongoing: true,
         featured: true,
     },
@@ -39,7 +39,7 @@ export default function Projects() {
         accent: '#50e3c2',
         accentGradient: 'linear-gradient(135deg, #50e3c2, #3fb5a1)',
         emoji: '📁',
-        link: 'https://github.com/Shounak-programmer/FileSenseAI',
+        link: null,
         ongoing: true,
         featured: true,
     },
@@ -51,7 +51,7 @@ export default function Projects() {
         accent: '#f5a623',
         accentGradient: 'linear-gradient(135deg, #f5a623, #c87f0a)',
         emoji: '🏠',
-        link: '#',
+        link: 'https://github.com/Shounak-programmer/Apartment_Management',
         ongoing: false,
         featured: true,
     },
@@ -63,7 +63,7 @@ export default function Projects() {
         accent: '#bd10e0',
         accentGradient: 'linear-gradient(135deg, #bd10e0, #960db8)',
         emoji: '🫁',
-        link: '#',
+        link: 'https://github.com/Shounak-programmer/bayesian-respiratory-inference',
         ongoing: false,
         featured: true,
     },
@@ -87,7 +87,7 @@ export default function Projects() {
         accent: '#ff6b6b',
         accentGradient: 'linear-gradient(135deg, #ff6b6b, #ff5252)',
         emoji: '💼',
-        link: '#',
+        link: 'https://github.com/Shounak-programmer/CODSOFT',
         ongoing: false,
         featured: true,
     },
@@ -353,6 +353,7 @@ export default function Projects() {
 
                                     {/* Action links row */}
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
+                                        {project.link ? (
                                         <motion.a
                                             href={project.link}
                                             target="_blank"
@@ -381,6 +382,20 @@ export default function Projects() {
                                                 →
                                             </motion.span>
                                         </motion.a>
+                                        ) : (
+                                        <span style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            color: 'var(--text-muted)',
+                                            fontSize: '0.875rem',
+                                            fontWeight: 500,
+                                            fontStyle: 'italic',
+                                            letterSpacing: '0.02em',
+                                        }}>
+                                            🔒 Repo coming soon
+                                        </span>
+                                        )}
 
                                         {project.liveLink && (
                                             <motion.a

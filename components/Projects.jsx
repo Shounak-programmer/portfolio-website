@@ -7,32 +7,142 @@ export default function Projects() {
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
     const projects = [
-        {
-            title: 'IDP — Intelligent Dispatch & Pathfinding',
-            description:
-                'A traffic management solution designed to reduce ambulance delays and eliminate noise pollution on Indian roads. Features a real-time Driver Radar App with spatial audio alerts, an Ambulance Navigation App that auto-clears traffic signals, and an Admin Dashboard for live monitoring. Built with Kalman filtering for smooth location prediction and Firebase for sub-second sync across all apps.',
-            tech: ['React', 'Vite', 'Node.js', 'Firebase', 'Google Maps API', 'Web Audio API', 'Tailwind CSS'],
-            accent: '#7a9e7e',
-            accentGradient: 'linear-gradient(135deg, #7a9e7e, #5a7a5a)',
-            emoji: '🚑',
-            link: 'https://github.com/Shounak-programmer/idp',
-            ongoing: true,
-            featured: true,
-        },
-        {
-            title: 'Portfolio Website',
-            description:
-                'This very portfolio — a personal showcase website built with Next.js, Framer Motion, and a custom natural design system. Features smooth scroll animations, a bento-grid skills layout, glassmorphism cards, and a fully responsive design. Deployed on Vercel with a custom domain.',
-            tech: ['Next.js', 'React', 'Framer Motion', 'CSS', 'Vercel'],
-            accent: '#c17a5a',
-            accentGradient: 'linear-gradient(135deg, #c17a5a, #d99070)',
-            emoji: '🌿',
-            link: 'https://github.com/Shounak-programmer/portfolio-website',
-            liveLink: 'https://shounakchatterjee.tech',
-            ongoing: false,
-            featured: false,
-        },
-    ];
+    {
+        title: 'IDP — Intelligent Dispatch & Pathfinding',
+        description:
+            'A traffic management solution designed to reduce ambulance delays and eliminate noise pollution on Indian roads. Features a real-time Driver Radar App with spatial audio alerts, an Ambulance Navigation App that auto-clears traffic signals, and an Admin Dashboard for live monitoring. Built with Kalman filtering for smooth location prediction and Firebase for sub-second sync across all apps.',
+        tech: ['React', 'Vite', 'Node.js', 'Firebase', 'Google Maps API', 'Web Audio API', 'Tailwind CSS'],
+        accent: '#7a9e7e',
+        accentGradient: 'linear-gradient(135deg, #7a9e7e, #5a7a5a)',
+        emoji: '🚑',
+        link: 'https://github.com/Shounak-programmer/idp',
+        ongoing: false,
+        featured: true,
+    },
+    {
+        title: 'ClassBud App',
+        description:
+            'An AI-powered classroom assistant that creates notes from live lecture audio, organizes them by subject/date/topic, and provides interactive learning with hint-based tutoring. It treats each class as a new session, integrates with Notion for knowledge management, and adapts to schedule changes while maintaining a persistent memory of all learned topics.',
+        tech: ['Electron', 'React', 'TypeScript', 'Python', 'Whisper AI', 'Notion API'],
+        accent: '#4a90e2',
+        accentGradient: 'linear-gradient(135deg, #4a90e2, #3a72b2)',
+        emoji: '🎓',
+        link: 'https://github.com/Shounak-programmer/ClassBud',
+        ongoing: true,
+        featured: true,
+    },
+    {
+        title: 'FileSense AI',
+        description:
+            'An open-source, privacy-first desktop application that intelligently organizes files based on their content—not just their names or extensions. Everything runs 100% locally, with no cloud, no accounts, no subscriptions, and no internet required.',
+        tech: ['Electron', 'React', 'TypeScript', 'Node.js', 'Tesseract OCR', 'OpenCLIP', 'SQLite'],
+        accent: '#50e3c2',
+        accentGradient: 'linear-gradient(135deg, #50e3c2, #3fb5a1)',
+        emoji: '📁',
+        link: 'https://github.com/Shounak-programmer/FileSenseAI',
+        ongoing: true,
+        featured: true,
+    },
+    {
+        title: 'Apartment Portal',
+        description:
+            'A web application for managing apartment listings, rental agreements, and tenant communications. Features include property search, lease document generation, payment tracking, and maintenance request handling.',
+        tech: ['React', 'Node.js', 'MongoDB', 'Express'],
+        accent: '#f5a623',
+        accentGradient: 'linear-gradient(135deg, #f5a623, #c87f0a)',
+        emoji: '🏠',
+        link: '#',
+        ongoing: false,
+        featured: true,
+    },
+    {
+        title: 'Bayesian Respiratory Inference',
+        description:
+            'A machine learning application that uses Bayesian networks to infer respiratory conditions from symptom data. Provides probabilistic diagnosis and uncertainty quantification for respiratory diseases.',
+        tech: ['Python', 'TensorFlow', 'Scikit-learn', 'Flask'],
+        accent: '#bd10e0',
+        accentGradient: 'linear-gradient(135deg, #bd10e0, #960db8)',
+        emoji: '🫁',
+        link: '#',
+        ongoing: false,
+        featured: true,
+    },
+    {
+        title: 'budwatch',
+        description:
+            'A personal finance and budgeting application that helps users track expenses, set savings goals, and visualize spending patterns. Features include automated transaction categorization and budget forecasting.',
+        tech: ['Python', 'Pandas', 'Matplotlib', 'Flask'],
+        accent: '#118ab2',
+        accentGradient: 'linear-gradient(135deg, #118ab2, #0e708a)',
+        emoji: '🌱',
+        link: '#',
+        ongoing: false,
+        featured: true,
+    },
+    {
+        title: 'CodSoft Internship',
+        description:
+            'Web development internship projects completed during the CodSoft internship program. Includes responsive websites, UI/UX designs, and frontend development tasks using HTML, CSS, and JavaScript.',
+        tech: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
+        accent: '#ff6b6b',
+        accentGradient: 'linear-gradient(135deg, #ff6b6b, #ff5252)',
+        emoji: '💼',
+        link: '#',
+        ongoing: false,
+        featured: true,
+    },
+    {
+        title: 'Cognifyz Internship',
+        description:
+            'Backend development internship projects completed during the Cognifyz internship program. Includes REST API development, database design, and server-side logic using Python and Django.',
+        tech: ['Python', 'Django', 'HTML', 'CSS'],
+        accent: '#4ecdc4',
+        accentGradient: 'linear-gradient(135deg, #4ecdc4, #3fa99a)',
+        emoji: '💼',
+        link: '#',
+        ongoing: false,
+        featured: true,
+    },
+
+    {
+        title: 'File Organizer',
+        description:
+            'A desktop application for intelligent file organization using computer vision and OCR technologies. Automatically sorts files into meaningful categories based on their actual content.',
+        tech: ['Electron', 'React', 'TypeScript', 'Node.js', 'Tesseract OCR', 'OpenCLIP'],
+        accent: '#06d6a0',
+        accentGradient: 'linear-gradient(135deg, #06d6a0, #05a880)',
+        emoji: '🗂️',
+        link: '#',
+        ongoing: false,
+        featured: true,
+    },
+    {
+        title: 'IntelliAssist AI',
+        description:
+            'An AI-powered personal assistant that integrates multiple AI models to provide intelligent responses, task automation, and personalized assistance. Features include natural language processing and contextual awareness.',
+        tech: ['Python', 'Gemini AI', 'Flask', 'React'],
+        accent: '#ff9f1c',
+        accentGradient: 'linear-gradient(135deg, #ff9f1c, #e68a00)',
+        emoji: '🤖',
+        link: '#',
+        ongoing: false,
+        featured: true,
+    },
+
+    {
+        title: 'Portfolio Website',
+        description:
+            'This very portfolio — a personal showcase website built with Next.js, Framer Motion, and a custom natural design system. Features smooth scroll animations, a bento-grid skills layout, glassmorphism cards, and a fully responsive design. Deployed on Vercel with a custom domain.',
+        tech: ['Next.js', 'React', 'Framer Motion', 'CSS', 'Vercel'],
+        accent: '#c17a5a',
+        accentGradient: 'linear-gradient(135deg, #c17a5a, #d99070)',
+        emoji: '🌿',
+        link: 'https://github.com/Shounak-programmer/portfolio-website',
+        liveLink: 'https://shounakchatterjee.tech',
+        ongoing: false,
+        featured: true,
+    },
+].sort((a, b) => b.ongoing - a.ongoing);
 
     return (
         <section id="projects" style={{ position: 'relative', padding: '120px 24px', zIndex: 1 }}>
@@ -125,10 +235,8 @@ export default function Projects() {
 
                                 {/* Content */}
                                 <div style={{ position: 'relative', zIndex: 1 }}>
-
                                     {/* Header row */}
                                     <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
-
                                         {/* Left: emoji + badges */}
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
                                             <motion.span
@@ -335,16 +443,26 @@ export default function Projects() {
 
             {/* Ambient decorations */}
             <div style={{
-                position: 'absolute', top: '30%', right: '-5%',
-                width: '350px', height: '350px',
+                position: 'absolute',
+                top: '30%',
+                right: '-5%',
+                width: '350px',
+                height: '350px',
                 background: 'radial-gradient(circle, rgba(193, 122, 90, 0.06) 0%, transparent 70%)',
-                filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none',
+                filter: 'blur(60px)',
+                zIndex: 0,
+                pointerEvents: 'none',
             }} />
             <div style={{
-                position: 'absolute', bottom: '20%', left: '-5%',
-                width: '350px', height: '350px',
+                position: 'absolute',
+                bottom: '20%',
+                left: '-5%',
+                width: '350px',
+                height: '350px',
                 background: 'radial-gradient(circle, rgba(122, 158, 126, 0.06) 0%, transparent 70%)',
-                filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none',
+                filter: 'blur(60px)',
+                zIndex: 0,
+                pointerEvents: 'none',
             }} />
 
             <style>{`

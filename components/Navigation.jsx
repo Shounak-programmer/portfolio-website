@@ -165,6 +165,9 @@ export default function Navigation() {
                             flexDirection: 'column',
                             alignItems: 'center',
                             gap: '4px',
+                            background: 'rgba(18,17,15,0.92)',
+                            backdropFilter: 'blur(20px)',
+                            WebkitBackdropFilter: 'blur(20px)',
                         }}
                     >
                         {navItems.map((item, i) => (
